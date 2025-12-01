@@ -128,8 +128,8 @@ export default function OrgDashboard() {
         </div>
       </nav>
 
-      <main className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl mb-6 text-center">
+      <main className="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <h2 className="text-4xl md:text-5xl mb-6 text-center">
           Welcome back,{" "}
           <span className="text-[#f77fbe]">
             {organization?.org_name || "Organization"}
@@ -138,16 +138,16 @@ export default function OrgDashboard() {
         </h2>
 
         {/* Quick actions – same logic, new colors */}
-        <section className="mb-10 rounded-2xl bg-white/10 border-2 border-white/40 shadow-lg px-6 py-5 backdrop-blur">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <section className="card mb-12 rounded-3xl bg-white/10 border-2 border-white/40 shadow-[0_30px_80px_rgba(82,178,191,0.35)] px-8 py-8 backdrop-blur transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_35px_90px_rgba(247,127,190,0.35)]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Post new opportunity */}
             <button
               disabled={!organization?.approved}
               onClick={() => router.push("/dashboard/org/post-opportunity")}
-              className="flex flex-col items-center justify-center p-6 rounded-xl bg-[#004aad] border border-white/30 hover:bg-[#00327a] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex flex-col items-center justify-center p-8 rounded-2xl bg-[#004aad] border border-white/30 hover:bg-[#00327a] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <svg
-                className="h-8 w-8 text-[#f77fbe] mb-2"
+                className="h-12 w-12 text-[#f77fbe] mb-3"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -159,9 +159,9 @@ export default function OrgDashboard() {
                   d="M12 4v16m8-8H4"
                 />
               </svg>
-              <span className="text-sm font-[Marble]">Post New Opportunity</span>
+              <span className="text-lg font-[Marble]">Post New Opportunity</span>
               {!organization?.approved && (
-                <span className="mt-1 text-xs text-blue-100">
+                <span className="mt-2 text-sm text-blue-100">
                   Approval required
                 </span>
               )}
@@ -171,10 +171,10 @@ export default function OrgDashboard() {
             <button
               disabled={!organization?.approved}
               onClick={() => router.push("/dashboard/org/my-opportunities")}
-              className="flex flex-col items-center justify-center p-6 rounded-xl bg-[#004aad] border border-white/30 hover:bg-[#00327a] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex flex-col items-center justify-center p-8 rounded-2xl bg-[#004aad] border border-white/30 hover:bg-[#00327a] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <svg
-                className="h-8 w-8 text-[#52b2bf] mb-2"
+                className="h-12 w-12 text-[#52b2bf] mb-3"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -186,11 +186,11 @@ export default function OrgDashboard() {
                   d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                 />
               </svg>
-              <span className="text-sm font-[Marble]">
+              <span className="text-lg font-[Marble]">
                 View My Opportunities
               </span>
               {!organization?.approved && (
-                <span className="mt-1 text-xs text-blue-100">
+                <span className="mt-2 text-sm text-blue-100">
                   Approval required
                 </span>
               )}
@@ -199,10 +199,10 @@ export default function OrgDashboard() {
             {/* Account settings */}
             <button
               onClick={() => router.push("/dashboard/org/account-settings")}
-              className="flex flex-col items-center justify-center p-6 rounded-xl bg-[#004aad] border border-white/30 hover:bg-[#00327a] transition-colors"
+              className="flex flex-col items-center justify-center p-8 rounded-2xl bg-[#004aad] border border-white/30 hover:bg-[#00327a] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)]"
             >
               <svg
-                className="h-8 w-8 text-purple-300 mb-2"
+                className="h-12 w-12 text-purple-300 mb-3"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -220,21 +220,21 @@ export default function OrgDashboard() {
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <span className="text-sm font-[Marble]">Account Settings</span>
+              <span className="text-lg font-[Marble]">Account Settings</span>
             </button>
           </div>
         </section>
 
         {/* Active Opportunities grid – styled like the mockup */}
-        <section className="rounded-2xl border-2 border-white/40 bg-[#004aad] shadow-2xl overflow-hidden">
-          <header className="flex items-center justify-between px-6 pt-6 pb-4">
-            <h3 className="text-2xl font-[Marble]">Active Opportunities</h3>
+        <section className="card rounded-3xl border-2 border-white/40 bg-[#004aad] shadow-[0_30px_80px_rgba(82,178,191,0.35)] overflow-hidden transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_35px_90px_rgba(247,127,190,0.35)]">
+          <header className="flex items-center justify-between px-8 pt-8 pb-6">
+            <h3 className="text-3xl font-[Marble]">Active Opportunities</h3>
             <button
               onClick={() =>
                 organization?.approved &&
                 router.push("/dashboard/org/post-opportunity")
               }
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-[#f77fbe] text-[#004aad] text-2xl leading-none font-[Marble] hover:scale-105 transition-transform disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-[#f77fbe] text-[#004aad] text-3xl leading-none font-[Marble] hover:scale-110 transition-transform duration-200 hover:shadow-[0_12px_28px_rgba(247,127,190,0.55)] disabled:opacity-40 disabled:cursor-not-allowed"
               disabled={!organization?.approved}
               aria-label="Add opportunity"
             >
@@ -243,8 +243,8 @@ export default function OrgDashboard() {
           </header>
 
           <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm font-[Marble] border-t border-white/30">
-              <thead className="text-white">
+            <table className="min-w-full text-left text-base font-[Marble] border-t border-white/30">
+              <thead className="text-white text-lg">
                 <tr>
                   {[
                     "Name",
@@ -278,31 +278,31 @@ export default function OrgDashboard() {
                   opportunities.map((opp) => (
                     <tr
                       key={opp.id}
-                      className="h-14 border-t border-white/15 last:border-b border-white/20"
+                      className="h-16 border-t border-white/15 last:border-b border-white/20"
                     >
-                      <td className="px-6 border-r border-white/10">
+                      <td className="px-6 py-4 border-r border-white/10">
                         {opp.opportunity_name || "—"}
                       </td>
-                      <td className="px-6 border-r border-white/10">
+                      <td className="px-6 py-4 border-r border-white/10">
                         {formatDate(opp.created_at)}
                       </td>
-                      <td className="px-6 border-r border-white/10">
+                      <td className="px-6 py-4 border-r border-white/10">
                         {opp.start_date || opp.end_date
                           ? `${formatDate(opp.start_date)} - ${formatDate(opp.end_date)}`
                           : "—"}
                       </td>
-                      <td className="px-6 border-r border-white/10">
+                      <td className="px-6 py-4 border-r border-white/10">
                         {opp.location_type
                           ? opp.location_type.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase())
                           : "—"}
                       </td>
-                      <td className="px-6 border-r border-white/10 text-center">
+                      <td className="px-6 py-4 border-r border-white/10 text-center">
                         —
                       </td>
-                      <td className="px-6 border-r border-white/10 text-center">
+                      <td className="px-6 py-4 border-r border-white/10 text-center">
                         —
                       </td>
-                      <td className="px-6">
+                      <td className="px-6 py-4">
                         {formatDate(opp.application_deadline)}
                       </td>
                     </tr>
