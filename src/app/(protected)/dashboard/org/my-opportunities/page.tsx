@@ -157,14 +157,14 @@ export default function MyOpportunitiesPage() {
           <div className="flex items-center justify-between h-16">
             <Link
               href="/dashboard/org"
-              className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none"
+              className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none transition-[text-shadow] duration-200 hover:[text-shadow:0_0_16px_rgba(247,127,190,0.65)]"
             >
               BERRY
             </Link>
 
             <button
               onClick={handleSignOut}
-              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-colors"
+              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-all hover:shadow-[0_0_18px_rgba(247,127,190,0.55)]"
             >
               Sign Out
             </button>
@@ -178,7 +178,7 @@ export default function MyOpportunitiesPage() {
           <div className="grid w-full max-w-5xl grid-cols-[auto_1fr_auto] items-center gap-6">
             <button
               onClick={() => router.push("/dashboard/org")}
-              className="p-2 rounded-full border border-white/40 text-white hover:bg-white hover:text-[#004aad] transition-colors"
+              className="p-2 rounded-full border border-white/40 text-white hover:bg-white hover:text-[#004aad] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(247,127,190,0.45)]"
               aria-label="Back to dashboard"
             >
               <svg
@@ -200,7 +200,7 @@ export default function MyOpportunitiesPage() {
             </h1>
             <button
               onClick={() => router.push("/dashboard/org/post-opportunity")}
-              className="w-11 h-11 rounded-full bg-[#f77fbe] text-[#004aad] text-2xl font-semibold flex items-center justify-center border border-white/40 shadow-md hover:bg-[#f992c8] transition-colors"
+              className="w-11 h-11 rounded-full bg-[#f77fbe] text-[#004aad] text-2xl font-semibold flex items-center justify-center border border-white/40 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(247,127,190,0.45)] hover:bg-[#f992c8]"
               aria-label="Post new opportunity"
             >
               +
@@ -272,7 +272,7 @@ export default function MyOpportunitiesPage() {
               return (
                 <article
                   key={opp.id}
-                  className="bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/40 shadow-lg hover:shadow-xl transition-all px-5 py-5 sm:px-7 sm:py-6"
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl border-2 border-white/40 shadow-[0_20px_60px_rgba(82,178,191,0.25)] hover:shadow-[0_24px_70px_rgba(247,127,190,0.35)] transition-transform duration-200 hover:-translate-y-1 px-5 py-5 sm:px-7 sm:py-6"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                     {/* Left section: title + chips + description + meta */}
@@ -283,7 +283,7 @@ export default function MyOpportunitiesPage() {
                           {opp.opportunity_name}
                         </h2>
                         <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide ${statusClasses}`}
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-[Marble] font-normal tracking-wide ${statusClasses}`}
                         >
                           {statusLabel}
                         </span>

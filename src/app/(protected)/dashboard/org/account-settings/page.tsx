@@ -128,20 +128,20 @@ export default function OrgAccountSettings() {
   if (!org || userRole !== "org") return null
 
   return (
-    <div className="min-h-screen bg-[#004aad] text-white font-[Marble]">
+    <div className="min-h-screen bg-[#004aad] text-white font-[Marble] overflow-x-hidden">
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link
               href="/dashboard/org"
-              className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none"
+              className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none transition-[text-shadow] duration-200 hover:[text-shadow:0_0_16px_rgba(247,127,190,0.65)]"
             >
               BERRY
             </Link>
 
             <button
               onClick={handleSignOut}
-              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-colors"
+              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-all hover:shadow-[0_0_18px_rgba(247,127,190,0.55)]"
             >
               Sign Out
             </button>
@@ -269,7 +269,7 @@ export default function OrgAccountSettings() {
             <button
               type="submit"
               disabled={saving}
-              className="w-full sm:w-auto rounded-full bg-[#f77fbe] px-10 py-2.5 text-sm font-[Marble] text-white shadow-md hover:shadow-lg hover:bg-[#f992c8] transition disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto rounded-full bg-[#f77fbe] px-12 py-3 text-sm font-[Marble] text-white shadow-md hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] hover:bg-[#f992c8] transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>

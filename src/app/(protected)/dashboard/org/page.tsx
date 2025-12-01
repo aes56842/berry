@@ -109,18 +109,18 @@ export default function OrgDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#004aad] text-white font-[Marble]">
+    <div className="min-h-screen bg-[#004aad] text-white font-[Marble] overflow-x-hidden">
       {/* Top bar – BERRY + Sign Out */}
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <span className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none">
+            <span className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none transition-[text-shadow] duration-200 hover:[text-shadow:0_0_16px_rgba(247,127,190,0.65)]">
               BERRY
             </span>
 
             <button
               onClick={handleSignOut}
-              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-colors"
+              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-all hover:shadow-[0_0_18px_rgba(247,127,190,0.55)]"
             >
               Sign Out
             </button>

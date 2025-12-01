@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { supabase } from '@/app/lib/supabaseClient'
 
 const US_STATES = [
@@ -190,20 +191,20 @@ export default function PostOpportunityPage() {
     'w-full rounded-[18px] border border-white/70 bg-transparent px-4 py-2.5 text-sm text-white placeholder:text-white/60 shadow-[0_0_0_1px_rgba(255,255,255,0.05)] focus:outline-none focus:ring-2 focus:ring-[#f77fbe] focus:border-transparent'
 
   return (
-    <div className="min-h-screen bg-[#004aad] text-white">
+    <div className="min-h-screen bg-[#004aad] text-white overflow-x-hidden">
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link
               href="/dashboard/org"
-              className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none"
+              className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none transition-[text-shadow] duration-200 hover:[text-shadow:0_0_16px_rgba(247,127,190,0.65)]"
             >
               BERRY
             </Link>
 
             <button
               onClick={handleSignOut}
-              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-colors"
+              className="px-4 py-2 rounded-full border border-white/60 text-sm font-[Marble] hover:bg-white hover:text-[#004aad] transition-all hover:shadow-[0_0_18px_rgba(247,127,190,0.55)]"
             >
               Sign Out
             </button>
@@ -211,40 +212,39 @@ export default function PostOpportunityPage() {
         </div>
       </nav>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
+      <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-14 font-[Marble]">
         {/* Top heading block */}
-        <div className="mb-10 text-center sm:text-left">
-          <p className="text-lg sm:text-xl text-[#f77fbe] tracking-wide font-semibold">
+        <div className="mb-6 text-center sm:text-left">
+          <p className="text-base sm:text-lg text-[#f77fbe] tracking-wide font-[Marble]">
             Post Opportunity
           </p>
-          <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-[Marble] leading-tight">
-            Answer the following for the opportunity you{' '}
-            <br className="hidden sm:block" />
-            would like to post
+          <h1 className="mt-2 text-3xl sm:text-4xl leading-snug">
+            Tell us about the opportunity
           </h1>
         </div>
 
-        {/* Error banner */}
-        {error && (
-          <div className="mb-6 rounded-2xl border border-red-300/70 bg-red-500/10 px-4 py-3 text-sm text-red-100 flex gap-3">
-            <span className="mt-0.5">
-              <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 7h2v5H9V7zm0 6h2v2H9v-2z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </span>
-            <span>{error}</span>
-          </div>
-        )}
+        <section className="card bg-white/10 rounded-3xl border border-white/20 shadow-[0_30px_80px_rgba(82,178,191,0.25)] px-5 sm:px-8 py-8 space-y-8">
+          {/* Error banner */}
+          {error && (
+            <div className="rounded-2xl border border-red-300/70 bg-red-500/10 px-4 py-3 text-sm text-red-100 flex gap-3">
+              <span className="mt-0.5">
+                <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 7h2v5H9V7zm0 6h2v2H9v-2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+              <span>{error}</span>
+            </div>
+          )}
 
-        {/* FORM */}
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-10"
-        >
+          {/* FORM */}
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-10"
+          >
           {/* BASIC INFO + REQUIREMENTS – like first blue mock */}
           <section className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -632,26 +632,27 @@ export default function PostOpportunityPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              className="w-full sm:w-auto rounded-full border border-white/70 px-8 py-2.5 text-sm font-medium text-white hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto rounded-full border border-white/70 px-8 py-2.5 text-sm font-[Marble] text-white hover:bg-white/10 transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.35)]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto rounded-full bg-[#f77fbe] px-10 py-2.5 text-sm font-semibold text-white shadow-md hover:shadow-lg hover:bg-[#f992c8] transition disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto rounded-full bg-[#f77fbe] px-10 py-2.5 text-sm font-[Marble] text-white shadow-md hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] hover:bg-[#f992c8] transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Submitting…' : 'Submit Opportunity'}
             </button>
           </div>
         </form>
+        </section>
       </div>
 
       {/* SUCCESS “THANK YOU” MODAL – we keep your logic but on brand */}
       {showSuccessModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-xl rounded-3xl bg-[#004aad] text-white px-8 py-10 shadow-2xl text-center">
-            <h2 className="text-3xl sm:text-4xl font-[Marble] mb-4 text-[#f77fbe]">
+          <div className="w-full max-w-xl rounded-3xl bg-[#004aad] text-white px-8 py-10 shadow-2xl text-center font-[Marble] font-normal border border-white/30 shadow-[0_0_35px_rgba(247,127,190,0.35)]">
+            <h2 className="text-3xl sm:text-4xl mb-4 text-[#f77fbe]">
               THANK YOU!
             </h2>
             <p className="text-lg mb-2">
@@ -661,9 +662,19 @@ export default function PostOpportunityPage() {
             <p className="text-sm text-white/80 mb-8">
               Look out for an email in approximately 1–2 business days.
             </p>
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/logos/berry-caterpillar.png"
+                alt="Berry caterpillar"
+                width={350}
+                height={150}
+                className="h-28 w-auto select-none"
+                priority
+              />
+            </div>
             <button
               onClick={handleSuccessClose}
-              className="rounded-full bg-white text-[#004aad] px-10 py-2.5 text-sm font-semibold hover:bg-slate-100 transition"
+              className="rounded-full bg-[#f77fbe] text-white px-10 py-2.5 text-sm font-[Marble] font-normal hover:bg-[#f992c8] transition hover:shadow-[0_0_20px_rgba(247,127,190,0.4)]"
             >
               Back to Dashboard
             </button>
