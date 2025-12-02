@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { supabase } from "@/app/lib/supabaseClient"
@@ -257,9 +259,16 @@ export default function EditOpportunityPage() {
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <span className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none transition-[text-shadow] duration-200 hover:[text-shadow:0_0_16px_rgba(247,127,190,0.65)]">
-              BERRY
-            </span>
+            <Link href="/dashboard/org" className="flex items-center">
+              <Image
+                src="/logos/BERRY%20LOGO%20%28svg%29.png"
+                alt="BERRY logo"
+                width={160}
+                height={60}
+                className="h-auto w-40 max-w-full select-none transition-[filter] duration-200 hover:drop-shadow-[0_0_16px_rgba(247,127,190,0.65)]"
+                priority
+              />
+            </Link>
 
             <button
               onClick={handleSignOut}

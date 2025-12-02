@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { supabase } from "@/app/lib/supabaseClient"
@@ -114,9 +116,19 @@ export default function OrgDashboard() {
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <span className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none transition-[text-shadow] duration-200 hover:[text-shadow:0_0_16px_rgba(247,127,190,0.65)]">
-              BERRY
-            </span>
+            <Link
+              href="/dashboard/org"
+              className="flex items-center"
+            >
+              <Image
+                src="/logos/BERRY%20LOGO%20%28svg%29.png"
+                alt="BERRY logo"
+                width={160}
+                height={60}
+                className="h-auto w-40 max-w-full select-none transition-[filter] duration-200 hover:drop-shadow-[0_0_16px_rgba(247,127,190,0.65)]"
+                priority
+              />
+            </Link>
 
             <button
               onClick={handleSignOut}
@@ -129,7 +141,7 @@ export default function OrgDashboard() {
       </nav>
 
       <main className="max-w-6xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl md:text-5xl mb-6 text-center">
+        <h2 className="text-4xl md:text-5xl mb-4 text-center">
           Welcome back,{" "}
           <span className="text-[#f77fbe]">
             {organization?.org_name || "Organization"}
@@ -226,7 +238,7 @@ export default function OrgDashboard() {
         </section>
 
         {/* Active Opportunities grid – styled like the mockup */}
-        <section className="card rounded-3xl border-2 border-white/40 bg-[#004aad] shadow-[0_30px_80px_rgba(82,178,191,0.35)] overflow-hidden transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_35px_90px_rgba(247,127,190,0.35)]">
+        <section className="card rounded-3xl border-2 border-white/40 bg-[#004aad] shadow-[0_24px_60px_rgba(82,178,191,0.25)] overflow-hidden transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(247,127,190,0.3)]">
           <header className="flex items-center justify-between px-8 pt-8 pb-6">
             <h3 className="text-3xl font-[Marble]">Active Opportunities</h3>
             <button
@@ -257,7 +269,7 @@ export default function OrgDashboard() {
                   ].map((col) => (
                     <th
                       key={col}
-                      className="px-6 py-3 border-r border-white/20 last:border-r-0 font-normal tracking-wide"
+                      className="px-6 py-3 border-r border-white/20 last:border-r-0 font-[Marble] font-normal tracking-wide"
                     >
                       {col}
                     </th>

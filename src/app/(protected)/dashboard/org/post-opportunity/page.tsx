@@ -197,9 +197,16 @@ export default function PostOpportunityPage() {
           <div className="flex items-center justify-between h-16">
             <Link
               href="/dashboard/org"
-              className="text-3xl font-[Atelia] tracking-wide text-[#f77fbe] select-none transition-[text-shadow] duration-200 hover:[text-shadow:0_0_16px_rgba(247,127,190,0.65)]"
+              className="flex items-center"
             >
-              BERRY
+              <Image
+                src="/logos/BERRY%20LOGO%20%28svg%29.png"
+                alt="BERRY logo"
+                width={160}
+                height={60}
+                className="h-auto w-40 max-w-full select-none transition-[filter] duration-200 hover:drop-shadow-[0_0_16px_rgba(247,127,190,0.65)]"
+                priority
+              />
             </Link>
 
             <button
