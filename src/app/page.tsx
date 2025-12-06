@@ -160,7 +160,7 @@ export default function Home() {
               {/* Secondary: Student Sign In (white) */}
               <Link
                 href="/auth?mode=signin"
-                className="rounded-full border border-[#004aad]/60 transition-all flex items-center justify-center bg-white text-[#004aad] gap-2 hover:bg-blue-50 font-[Marble] text-sm sm:text-base h-12 px-8 sm:w-auto"
+                className="rounded-full border border-[#004aad]/60 transition-all flex items-center justify-center bg-white text-[#004aad] gap-2 hover:bg-[#00337a] hover:text-white font-[Marble] text-sm sm:text-base h-12 px-8 sm:w-auto"
               >
                 Student Sign In
               </Link>
