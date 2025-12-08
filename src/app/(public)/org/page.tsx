@@ -210,7 +210,7 @@ export default function OrganizationRegistration() {
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Registration Submitted!</h2>
             <p className="text-lg text-gray-600 mb-4">
-              We've sent you an email confirmation to <strong>{formData.contactEmail}</strong>
+              We&apos;ve sent you an email confirmation to <strong>{formData.contactEmail}</strong>
             </p>
             <p className="text-gray-600 mb-2">Please verify your email before moving forward.</p>
             <p className="text-gray-600 mb-8">
@@ -222,7 +222,7 @@ export default function OrganizationRegistration() {
               <ol className="list-decimal list-inside space-y-2 text-sm text-blue-800">
                 <li>Check your email and verify your address</li>
                 <li>Our team will manually review your application</li>
-                <li>You'll receive approval notification within 2-3 business days</li>
+                <li>You&apos;ll receive approval notification within 2-3 business days</li>
                 <li>Once approved, you can sign in and start posting opportunities</li>
               </ol>
             </div>
@@ -756,7 +756,7 @@ export default function OrganizationRegistration() {
                       htmlFor="goalsDescription"
                       className="block font-medium text-[#f77fbe] mb-2"
                     >
-                      What are your organization's goals with LAUSD students? *
+                      What are your organization&apos;s goals with LAUSD students? *
                     </label>
                     <textarea
                       id="goalsDescription"
@@ -770,7 +770,7 @@ export default function OrganizationRegistration() {
                     />
                     <p className="text-xs text-[#fbb6d3] mt-1">
                       Minimum 50 characters. Be specific about programs, internships, or opportunities
-                      you'll provide.
+                      you&apos;ll provide.
                     </p>
                   </div>
                 </div>
@@ -794,7 +794,7 @@ export default function OrganizationRegistration() {
                       <div className="mt-2 text-sm text-blue-700">
                         <ol className="list-decimal list-inside space-y-1">
                           <li>
-                            You'll receive an email confirmation at{" "}
+                            You&apos;ll receive an email confirmation at{" "}
                             <strong>{formData.contactEmail || "your email"}</strong>
                           </li>
                           <li>Verify your email before moving forward</li>

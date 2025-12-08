@@ -6,10 +6,9 @@ import Link from "next/link"
 import { supabase } from "@/app/lib/supabaseClient"
 
 interface OrgInfo {
-  org_name?: string
-  org_email?: string
-  verification_status?: string
-  approved?: boolean
+  orgName?: string
+  statusMessage?: string
+  createdAt?: string
 }
 
 export default function OrganizationPendingApproval() {
@@ -97,7 +96,7 @@ export default function OrganizationPendingApproval() {
                 <strong>Status:</strong> {orgInfo.statusMessage}
               </p>
               <p className="text-sm text-blue-800">
-                <strong>Submitted:</strong> {new Date(orgInfo.createdAt).toLocaleDateString()}
+                <strong>Submitted:</strong> {orgInfo.createdAt ? new Date(orgInfo.createdAt).toLocaleDateString() : 'N/A'}
               </p>
             </div>
           )}
@@ -121,7 +120,7 @@ export default function OrganizationPendingApproval() {
               </li>
               <li className="flex items-start">
                 <span className="flex-shrink-0 w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5">📧</span>
-                <span>You'll receive an email notification when your application is approved</span>
+                <span>You&apos;ll receive an email notification when your application is approved</span>
               </li>
               <li className="flex items-start">
                 <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5">🚀</span>

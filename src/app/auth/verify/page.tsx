@@ -1,8 +1,12 @@
 'use client'
 
+// Force dynamic rendering to avoid prerendering issues with useSearchParams
+export const dynamic = 'force-dynamic'
+
 import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/app/lib/supabaseClient'
+import type { Session } from '@supabase/supabase-js'
 
 // Allowed email domains - get from environment if available
 const ALLOWED_DOMAINS = (process.env.NEXT_PUBLIC_ALLOWED_DOMAINS || "usc.edu,lausd.net").split(",")
@@ -82,15 +86,15 @@ export default function VerifyPage() {
   }
 
   // New function to ensure session is properly established and persisted
-  const ensureSessionEstablished = async (session: Record<string, unknown>) => {
+  const ensureSessionEstablished = async (session: Session) => {
     console.log('Ensuring session is properly established...')
 
     try {
       // First, explicitly set the session to ensure it's persisted
       if (session) {
         const { error: sessionError } = await supabase.auth.setSession({
-          access_token: session.access_token,
-          refresh_token: session.refresh_token
+          access_token: session.access_token as string,
+          refresh_token: session.refresh_token as string
         })
 
         if (sessionError) {
@@ -305,9 +309,9 @@ export default function VerifyPage() {
           }
         }, 1500)
         
-      } catch (err: Record<string, unknown>) {
+      } catch (err: unknown) {
         console.error('Auth verification error:', err)
-        setError(`Authentication error: ${err.message}`)
+        setError(`Authentication error: ${err instanceof Error ? err.message : 'Unknown error'}`)
         
         // Try to check if we have a session despite the error
         try {
@@ -358,7 +362,7 @@ export default function VerifyPage() {
         }
         
         setTimeout(() => {
-          router.push(`/auth?error=verification_error&message=${encodeURIComponent(err.message)}`)
+          router.push(`/auth?error=verification_error&message=${encodeURIComponent(err instanceof Error ? err.message : 'Unknown error')}`)
         }, 2000)
       }
     }
@@ -371,7 +375,7 @@ export default function VerifyPage() {
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">Verifying Your Account</h1>
-        
+
         {error ? (
           <div className="text-center">
             <div className="text-red-600 mb-4">{error}</div>

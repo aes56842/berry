@@ -48,7 +48,7 @@ const customStorageAdapter: SupportedStorage = {
         // Cookies store JSON stringified values, so we need to parse them
         return cookieValue
       } catch {
-        console.warn('Failed to parse cookie value:', e)
+        console.warn('Failed to parse cookie value')
       }
     }
     
@@ -69,7 +69,7 @@ const customStorageAdapter: SupportedStorage = {
       try {
         globalThis.localStorage.setItem(key, value)
       } catch {
-        console.warn('Failed to set localStorage item:', e)
+        console.warn('Failed to set localStorage item')
       }
     }
   },
@@ -83,7 +83,7 @@ const customStorageAdapter: SupportedStorage = {
       try {
         globalThis.localStorage.removeItem(key)
       } catch {
-        console.warn('Failed to remove localStorage item:', e)
+        console.warn('Failed to remove localStorage item')
       }
     }
   },

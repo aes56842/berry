@@ -75,7 +75,7 @@ export async function GET(req: Request) {
     const now = new Date();
     const opportunitiesListFiltered = opportunitiesList.filter((o: Record<string, unknown>) => {
       if (!o?.application_deadline) return true; // keep if no deadline
-      const d = new Date(o.application_deadline);
+      const d = new Date(o.application_deadline as string);
       return d >= now;
     });
 
@@ -99,12 +99,12 @@ export async function GET(req: Request) {
       }
     }
 
-    const orgMap = new Map<string, string | null>(orgs.map((r: Record<string, unknown>) => [r.id, r.org_name ?? null]));
+    const orgMap = new Map<string, string | null>(orgs.map((r: Record<string, unknown>) => [r.id as string, (r.org_name as string) ?? null]));
 
     // Attach org_name to each opportunity
     const opportunities = effectiveOpportunities.map((o: Record<string, unknown>) => ({
       ...o,
-      org_name: o.organization_id ? orgMap.get(o.organization_id) ?? null : null,
+      org_name: o.organization_id ? orgMap.get(o.organization_id as string) ?? null : null,
     }));
 
     return NextResponse.json({

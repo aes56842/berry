@@ -256,7 +256,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Build update object with only provided fields
-    const updateData: Record<string, any> = {}
+    const updateData: Record<string, unknown> = {}
 
     if (body.firstName) updateData.first_name = body.firstName
     if (body.lastName) updateData.last_name = body.lastName

@@ -1,5 +1,8 @@
 "use client"
 
+// Force dynamic rendering to avoid prerendering issues with useSearchParams
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { supabase } from "@/app/lib/supabaseClient"
@@ -236,7 +239,7 @@ export default function AuthPage() {
             <h2 className="text-2xl font-bold text-gray-800 mt-2">Check Your Email</h2>
           </div>
           <p className="mb-4 text-gray-600 text-center">
-            We've sent a magic link to <strong>{email}</strong>
+            We&apos;ve sent a magic link to <strong>{email}</strong>
           </p>
           <p className="text-gray-600 mb-8 text-center">
             Click the link to {mode === "signup" ? "complete your registration" : "sign in"}. 
@@ -490,7 +493,7 @@ export default function AuthPage() {
                       Student accounts require an email address from one of our approved educational domains: {ALLOWED_DOMAINS.join(", ")}
                     </p>
                     <p className="mt-2">
-                      After verifying your email, you'll complete your profile with your name, school, and interests.
+                      After verifying your email, you&apos;ll complete your profile with your name, school, and interests.
                     </p>
                   </div>
                 </div>
