@@ -68,26 +68,27 @@ export default function OrgLoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#004aad] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 text-white">
+      {/* Make Marble the default font for everything inside */}
+      <div className="max-w-md w-full space-y-8 text-white font-[Marble]">
         {/* HEADER: Welcome Back + Berry logo */}
-        <div className="relative mb-6">
-          <p className="absolute -top-6 left-0 text-xl sm:text-2xl text-[#f77fbe] font-[Atelia] -rotate-12">
+        <div className="relative mb-8">
+          <p className="absolute -top-7 left-0 text-2xl sm:text-3xl text-[#f77fbe] font-[Marble] -rotate-12">
             Welcome Back!
           </p>
-          <h1 className="text-center text-4xl sm:text-5xl font-[Atelia] tracking-[0.25em] text-[#f77fbe]">
+          <h1 className="text-center text-5xl sm:text-6xl font-[Atelia] tracking-[0.25em] text-[#f77fbe]">
             BERRY
           </h1>
         </div>
 
         {/* Main heading / subheading */}
         <div>
-          <h2 className="mt-4 text-center text-3xl font-[Marble] text-white">
+          <h2 className="mt-4 text-center text-4xl font-[Marble] text-white">
             Organization Login
           </h2>
-          <p className="mt-2 text-center text-sm text-blue-100 font-[Marble]">
+          <p className="mt-3 text-center text-lg font-[Marble] text-blue-100">
             Access your organization dashboard
           </p>
-          <p className="mt-1 text-center text-xs text-blue-100 font-[Marble]">
+          <p className="mt-1 text-center text-sm sm:text-base font-[Marble]text-blue-100">
             Only registered organizations can access this portal
           </p>
         </div>
@@ -108,17 +109,17 @@ export default function OrgLoginPage() {
                   d="M5 13l4 4L19 7"
                 />
               </svg>
-              <h3 className="mt-2 text-lg font-medium text-white">
+              <h3 className="mt-3 text-2xl font-[Marble] text-white">
                 Check your email
               </h3>
-              <p className="mt-1 text-sm text-blue-100">
+              <p className="mt-2 text-base text-blue-100 font-[Marble]">
                 We've sent a login link to <strong>{email}</strong>
               </p>
               <div className="mt-6">
                 <button
                   type="button"
                   onClick={() => setEmailSent(false)}
-                  className="text-sm text-[#f77fbe] hover:text-pink-300 font-[Marble]"
+                  className="text-base text-[#f77fbe] font-[Marble] hover:text-pink-300"
                 >
                   Use a different email
                 </button>
@@ -128,17 +129,17 @@ export default function OrgLoginPage() {
         ) : (
           <div className="mt-8 space-y-6">
             {error && (
-              <div className="bg-red-500/10 border border-red-400 text-red-200 px-4 py-3 rounded">
+              <div className="bg-red-500/10 border border-red-400 text-red-200 px-4 py-3 rounded text-base">
                 {error}
               </div>
             )}
 
             {/* FORM */}
-            <form onSubmit={handleOrgSignIn} className="space-y-4">
+            <form onSubmit={handleOrgSignIn} className="space-y-5">
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-[Marble] text-[#f77fbe]"
+                  className="block text-base text-[#f77fbe] font-[Marble]"
                 >
                   Organization Email
                 </label>
@@ -150,7 +151,7 @@ export default function OrgLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-4 py-2 border border-[#f77fbe] bg-transparent rounded-md text-[#f77fbe] placeholder-pink-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-white focus:border-white"
+                  className="mt-2 block w-full px-4 py-3 border border-[#f77fbe] bg-transparent rounded-md text-[#f77fbe] font-[Marble] placeholder-pink-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-white focus:border-white text-base"
                   placeholder="your@organization.com"
                   disabled={isLoading}
                 />
@@ -160,7 +161,7 @@ export default function OrgLoginPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="group relative w-full flex justify-center py-3 px-4 border border-white rounded-full text-sm font-[Marble] text-white bg-transparent hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="group relative w-full flex justify-center py-3.5 px-4 border border-white rounded-full text-base text-white font-[Marble] bg-transparent hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <span className="flex items-center">
@@ -194,29 +195,29 @@ export default function OrgLoginPage() {
             </form>
 
             {/* Links under form */}
-            <div className="text-center space-y-2">
-              <div className="text-sm text-blue-100 font-[Marble]">
+            <div className="text-center space-y-3">
+              <div className="text-base text-blue-100 font-[Marble]">
                 New to <span className="text-[#f77fbe]">BERRY</span>?{" "}
                 <Link
                   href="/org"
-                  className="font-[Marble] text-white underline underline-offset-4"
+                  className="text-white font-[Marble] underline underline-offset-4"
                 >
                   Join now
                 </Link>
               </div>
-              <div className="text-sm text-blue-100 font-[Marble]">
+              <div className="text-base font-[Marble] text-blue-100">
                 Are you a student?{" "}
                 <Link
                   href="/auth"
-                  className="font-[Marble] text-white underline underline-offset-4"
+                  className="text-white font-[Marble] underline underline-offset-4"
                 >
                   Student sign in
                 </Link>
               </div>
-              <div className="text-sm text-blue-100 font-[Marble]">
+              <div className="text-base text-blue-100 font-[Marble]">
                 <Link
                   href="/"
-                  className="font-[Marble] text-blue-100 hover:text-white"
+                  className="text-blue-100 font-[Marble] hover:text-white"
                 >
                   ← Back to home
                 </Link>
@@ -226,11 +227,11 @@ export default function OrgLoginPage() {
         )}
 
         {/* Info box at bottom */}
-        <div className="mt-8 border border-white/30 bg-white/5 p-4 rounded-lg">
+        <div className="mt-10 border border-white/30 bg-white/5 p-5 rounded-lg">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg
-                className="h-5 w-5 text-blue-100"
+                className="h-6 w-6 text-blue-100"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -242,10 +243,10 @@ export default function OrgLoginPage() {
               </svg>
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-[Marble] text-white">
+              <h3 className="text-lg font-[Marble] text-white">
                 Organization Access
               </h3>
-              <div className="mt-2 text-sm text-blue-100 font-[Marble]">
+              <div className="mt-2 text-base font-[Marble] text-blue-100">
                 <p>
                   This portal is for registered organizations only. If your
                   organization isn't registered yet, please complete the

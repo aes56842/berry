@@ -67,29 +67,6 @@ export default function Navbar() {
             {/* Public Navigation - Not logged in */}
             {!loading && !user && (
               <>
-                {/* Sign In – white button */}
-                <Link
-                  href="/auth?mode=signin"
-                  className="px-4 py-2 rounded-full text-sm font-[Marble] bg-white text-[#004aad] border border-[#004aad]/60 hover:bg-blue-50 hover:border-[#004aad] transition-all shadow-sm"
-                >
-                  Sign In
-                </Link>
-
-                {/* Sign Up – pink button */}
-                <Link
-                  href="/auth?mode=signup"
-                  className="px-4 py-2 rounded-full text-sm font-[Marble] bg-[#f77fbe] text-white hover:bg-[#d763a4] transition-all shadow-md shadow-pink-300/40"
-                >
-                  Sign Up
-                </Link>
-
-                {/* Org Registration – blue button */}
-                <Link
-                  href="/org"
-                  className="px-4 py-2 rounded-full text-sm font-[Marble] bg-[#52b2bf] text-white hover:bg-[#00337a] transition-all shadow-md shadow-blue-900/40"
-                >
-                  Org Registration
-                </Link>
 
                 {/* Admin – subtle outline */}
                 <Link
