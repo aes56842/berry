@@ -268,7 +268,7 @@ export default function Home() {
             <div className="w-full border-t border-white/15 mt-10 pt-4">
               <div className="mt-4 text-xs sm:text-sm font-[Marble] text-gray-300">
                 🔒 Secure access with authorized email authentication{" "}
-                <span className="text-gray-200">(@usc.edu, @lausd.net)</span>
+                <span className="text-gray-200">(@lausd.net)</span>
               </div>
             </div>
           </div>
