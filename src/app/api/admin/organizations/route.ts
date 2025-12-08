@@ -96,12 +96,20 @@ export async function PATCH(request: NextRequest) {
         )
       }
 
+      // Normalize verification status to be resilient to casing/format differences
+      const rawStatus = org?.verification_status
+      const normalized = rawStatus ? String(rawStatus).trim().toLowerCase() : ''
+
+      const allowed = ['email_verified', 'email-verified', 'email verified', 'approved']
+
       // Validate that email is verified before allowing approval
-      if (org.verification_status !== 'email_verified' && org.verification_status !== 'approved') {
+      if (!allowed.includes(normalized)) {
+        console.warn(`Attempted approve but org has verification_status='${rawStatus}' (normalized='${normalized}')`)
         return NextResponse.json(
           {
             message: "Cannot approve organization: Email not yet verified. Please ensure the organization has verified their email before approving.",
-            currentStatus: org.verification_status
+            currentStatus: rawStatus,
+            normalizedStatus: normalized
           },
           { status: 400 }
         )
