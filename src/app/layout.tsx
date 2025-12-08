@@ -1,8 +1,9 @@
 // src/app/layout.tsx
 import type { Metadata } from "next"
 import "./globals.css"
-import Providers from "./components/Providers";
-import Navbar from "@/app/components/Navbar"
+import Providers from "./providers"
+import Navbar from "@/components/Navbar"
+import Footer from "@/components/Footer"
 
 export const metadata: Metadata = {
   title: "Berry",
@@ -16,16 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="
-  font-[Marble]
-  antialiased
-  min-h-screen
-  bg-[#707070]
-  bg-[radial-gradient(circle_at_center,_rgba(255,182,222,0.18)_0%,_rgba(112,112,112,1)_75%)]
-">
+      <body className="min-h-screen flex flex-col bg-[#004DB7]">
         <Providers>
           <Navbar />
-          {children}
+          <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

@@ -191,7 +191,7 @@ export default function PostOpportunityPage() {
     'w-full rounded-[18px] border border-white/70 bg-transparent px-4 py-2.5 text-sm text-white placeholder:text-white/60 shadow-[0_0_0_1px_rgba(255,255,255,0.05)] focus:outline-none focus:ring-2 focus:ring-[#f77fbe] focus:border-transparent'
 
   return (
-    <div className="min-h-screen bg-[#004aad] text-white overflow-x-hidden">
+    <div className="flex-1 flex flex-col bg-[#004aad] text-white overflow-x-hidden">
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">

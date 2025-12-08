@@ -143,7 +143,7 @@ export default function MyOpportunitiesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center font-[Marble] bg-[#004aad] text-white">
+      <div className="flex-1 flex items-center justify-center font-[Marble] bg-[#004aad] text-white">
         <div
           className="animate-spin rounded-full h-12 w-12 border-2 border-white/30 border-t-white"
         />
@@ -152,7 +152,7 @@ export default function MyOpportunitiesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#004aad] text-white font-[Marble]">
+    <div className="flex-1 flex flex-col bg-[#004aad] text-white font-[Marble]">
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">

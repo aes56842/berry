@@ -49,7 +49,7 @@ export default function Navbar() {
   const userRole = user?.user_metadata?.role
 
   return (
-    <nav className="sticky top-0 z-50 bg-transparent backdrop-blur-md shadow-none">
+    <nav className="sticky top-0 z-50 bg-[#004aad]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo */}

@@ -229,7 +229,7 @@ export default function EditOpportunityPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center font-[Marble] bg-[#004aad] text-white">
+      <div className="flex-1 flex items-center justify-center font-[Marble] bg-[#004aad] text-white">
         <div
           className="animate-spin rounded-full h-12 w-12 border-2 border-white/30 border-t-white"
         />
@@ -239,7 +239,7 @@ export default function EditOpportunityPage() {
 
   if (error && !formData.opportunityName) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 font-[Marble] bg-[#004aad] text-white">
+      <div className="flex-1 flex items-center justify-center p-4 font-[Marble] bg-[#004aad] text-white">
         <div className="bg-red-500/10 border border-red-300/70 rounded-2xl p-6 max-w-md w-full">
           <h2 className="text-lg font-semibold mb-2">Error Loading Opportunity</h2>
           <p className="text-red-100 mb-4">{error}</p>
@@ -255,7 +255,7 @@ export default function EditOpportunityPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#004aad] text-white font-[Marble] overflow-x-hidden">
+    <div className="flex-1 flex flex-col bg-[#004aad] text-white font-[Marble] overflow-x-hidden">
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">

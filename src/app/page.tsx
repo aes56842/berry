@@ -29,9 +29,9 @@ export default function Home() {
   // While auth is loading → simple centered spinner
   if (loading) {
     return (
-      <div className="relative min-h-screen bg-[#707070]">
+      <div className="relative flex-1 flex flex-col bg-[#707070]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_#8c8c8c_0,_#707070_40%,_#3f3f3f_100%)] opacity-90" />
-        <div className="relative z-10 flex min-h-screen items-center justify-center">
+        <div className="relative z-10 flex flex-1 items-center justify-center">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" />
         </div>
       </div>
@@ -43,12 +43,10 @@ export default function Home() {
 
   // Not logged in → branded welcome page
   return (
-    <div className="h-screen overflow-hidden">
-      {/* background */}
+    <div className="flex-1 flex flex-col relative overflow-hidden bg-[#004aad]">
       <div className="pointer-events-none absolute inset-0 bg-[#004aad] opacity-90" />
 
-      <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
-        {/* 2-column shell */}
+      <div className="relative z-10 flex flex-1 items-center justify-center px-4 py-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
           {/* LEFT: Logo block */}
           <div className="w-full md:w-1/2 flex justify-center md:justify-start">

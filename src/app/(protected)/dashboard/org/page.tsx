@@ -93,7 +93,7 @@ export default function OrgDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#004aad]">
+      <div className="flex-1 flex items-center justify-center bg-[#004aad]">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white" />
       </div>
     )
@@ -111,7 +111,7 @@ export default function OrgDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#004aad] text-white font-[Marble] overflow-x-hidden">
+    <div className="flex-1 flex flex-col bg-[#004aad] text-white font-[Marble] overflow-x-hidden">
       {/* Top bar – BERRY + Sign Out */}
       <nav>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
