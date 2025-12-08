@@ -1,9 +1,6 @@
 "use client"
 
-// Force dynamic rendering to avoid prerendering issues with useSearchParams
-export const dynamic = 'force-dynamic'
-
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { supabase } from "@/app/lib/supabaseClient"
 import Link from "next/link"
@@ -11,7 +8,7 @@ import Link from "next/link"
 // Allowed email domains - get from environment if available
 const ALLOWED_DOMAINS = (process.env.NEXT_PUBLIC_ALLOWED_DOMAINS || "usc.edu,lausd.net").split(",")
 
-export default function AuthPage() {
+function AuthPageContent() {
   const [email, setEmail] = useState("")
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
@@ -525,5 +522,17 @@ export default function AuthPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    }>
+      <AuthPageContent />
+    </Suspense>
   )
 }

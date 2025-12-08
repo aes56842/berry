@@ -1,9 +1,6 @@
 'use client'
 
-// Force dynamic rendering to avoid prerendering issues with useSearchParams
-export const dynamic = 'force-dynamic'
-
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/app/lib/supabaseClient'
 import type { Session } from '@supabase/supabase-js'
@@ -11,7 +8,7 @@ import type { Session } from '@supabase/supabase-js'
 // Allowed email domains - get from environment if available
 const ALLOWED_DOMAINS = (process.env.NEXT_PUBLIC_ALLOWED_DOMAINS || "usc.edu,lausd.net").split(",")
 
-export default function VerifyPage() {
+function VerifyPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [status, setStatus] = useState('Verifying your authentication...')
@@ -389,5 +386,23 @@ export default function VerifyPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+          <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">Verifying Your Account</h1>
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <VerifyPageContent />
+    </Suspense>
   )
 }
