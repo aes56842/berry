@@ -6,11 +6,20 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { supabase } from "@/app/lib/supabaseClient"
 
+interface StudentProfile {
+  first_name?: string
+  last_name?: string
+  date_of_birth?: string
+  school?: string
+  grade_level?: string
+  gpa?: number
+}
+
 export default function StudentDashboard() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<{ id: string; email?: string; user_metadata?: { first_name?: string; last_name?: string; role?: string } } | null>(null)
   const [loading, setLoading] = useState(true)
-  const [profile, setProfile] = useState<any>(null)
+  const [profile, setProfile] = useState<StudentProfile | null>(null)
 
   useEffect(() => {
     const checkUser = async () => {

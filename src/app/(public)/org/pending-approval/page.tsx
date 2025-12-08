@@ -5,13 +5,21 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { supabase } from "@/app/lib/supabaseClient"
 
+interface OrgInfo {
+  org_name?: string
+  org_email?: string
+  verification_status?: string
+  approved?: boolean
+}
+
 export default function OrganizationPendingApproval() {
   const router = useRouter()
-  const [orgInfo, setOrgInfo] = useState<any>(null)
+  const [orgInfo, setOrgInfo] = useState<OrgInfo | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     checkOrgStatus()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkOrgStatus = async () => {

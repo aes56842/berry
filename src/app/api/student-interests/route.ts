@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate priority interests
-    const priorityInterests = body.interests.filter((i: any) => i.isPriority)
+    const priorityInterests = body.interests.filter((i: Record<string, unknown>) => i.isPriority)
     if (priorityInterests.length < 3 || priorityInterests.length > 5) {
       return NextResponse.json(
         { message: "Please select between 3-5 priority interests" },
@@ -117,7 +117,7 @@ export async function POST(request: NextRequest) {
       .eq('student_id', body.userId)
 
     // Insert new interests
-    const interestsData = body.interests.map((interest: any) => ({
+    const interestsData = body.interests.map((interest: Record<string, unknown>) => ({
       student_id: body.userId,
       category: interest.category,
       is_priority: interest.isPriority || false
@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Insert opportunity preferences
-    const preferencesData = body.opportunityPreferences.map((pref: any) => ({
+    const preferencesData = body.opportunityPreferences.map((pref: Record<string, unknown>) => ({
       student_id: body.userId,
       preference_type: pref.preferenceType,
       other_description: pref.otherDescription || null

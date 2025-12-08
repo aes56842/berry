@@ -14,7 +14,7 @@ export default function useFavorites() {
         const arr = JSON.parse(raw) as string[]
         setFavorites(new Set(arr))
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, [])
@@ -22,7 +22,7 @@ export default function useFavorites() {
   useEffect(() => {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(favorites)))
-    } catch (e) {
+    } catch {
       // ignore
     }
   }, [favorites])

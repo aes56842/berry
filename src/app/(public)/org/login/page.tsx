@@ -58,9 +58,9 @@ export default function OrgLoginPage() {
 
       // Show confirmation
       setEmailSent(true);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Organization sign-in error:", err);
-      setError(err.message || "Failed to send magic link");
+      setError((err as Error).message || "Failed to send magic link");
     } finally {
       setIsLoading(false);
     }
@@ -113,7 +113,7 @@ export default function OrgLoginPage() {
                 Check your email
               </h3>
               <p className="mt-2 text-base text-blue-100 font-[Marble]">
-                We've sent a login link to <strong>{email}</strong>
+                We&apos;ve sent a login link to <strong>{email}</strong>
               </p>
               <div className="mt-6">
                 <button
@@ -249,7 +249,7 @@ export default function OrgLoginPage() {
               <div className="mt-2 text-base font-[Marble] text-blue-100">
                 <p>
                   This portal is for registered organizations only. If your
-                  organization isn't registered yet, please complete the
+                  organization isn&apos;t registered yet, please complete the
                   registration process first.
                 </p>
               </div>

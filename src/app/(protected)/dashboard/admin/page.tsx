@@ -19,7 +19,7 @@ interface Organization {
 
 export default function AdminDashboard() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<{ id: string; email?: string; user_metadata?: { first_name?: string; last_name?: string; role?: string } } | null>(null)
   const [stats, setStats] = useState({
     totalUsers: 156,
     totalOrganizations: 0,

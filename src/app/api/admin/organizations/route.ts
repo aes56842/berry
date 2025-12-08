@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { createClient } from '@supabase/supabase-js'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Initialize Supabase client
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
@@ -109,7 +109,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Update organization approval status and verification_status
-    const updateData: any = { approved }
+    const updateData: Record<string, unknown> = { approved }
     if (approved) {
       updateData.verification_status = 'approved'
     } else {

@@ -4,7 +4,7 @@ import { createClient, SupportedStorage } from '@supabase/supabase-js'
 function supportsLocalStorage() {
   try {
     return typeof window !== 'undefined' && window.localStorage != null
-  } catch (e) {
+  } catch {
     return false
   }
 }
@@ -47,7 +47,7 @@ const customStorageAdapter: SupportedStorage = {
       try {
         // Cookies store JSON stringified values, so we need to parse them
         return cookieValue
-      } catch (e) {
+      } catch {
         console.warn('Failed to parse cookie value:', e)
       }
     }
@@ -68,7 +68,7 @@ const customStorageAdapter: SupportedStorage = {
     if (supportsLocalStorage()) {
       try {
         globalThis.localStorage.setItem(key, value)
-      } catch (e) {
+      } catch {
         console.warn('Failed to set localStorage item:', e)
       }
     }
@@ -82,7 +82,7 @@ const customStorageAdapter: SupportedStorage = {
     if (supportsLocalStorage()) {
       try {
         globalThis.localStorage.removeItem(key)
-      } catch (e) {
+      } catch {
         console.warn('Failed to remove localStorage item:', e)
       }
     }

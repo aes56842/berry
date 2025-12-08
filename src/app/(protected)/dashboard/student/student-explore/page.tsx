@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { FaStar, FaBars, FaFilter, FaSearch } from "react-icons/fa";
+import { FaStar, FaBars, FaSearch } from "react-icons/fa";
 import useFavorites from "../../../../../lib/useFavorites";
 import Image from "next/image";
 import Link from "next/link";
@@ -25,7 +25,7 @@ type Opportunity = {
   location_type?: string | null;
   application_url?: string | null;
   has_stipend?: boolean | null;
-  contact_info?: any | null;
+  contact_info?: Record<string, unknown> | null;
 };
 
 const BERRY_CATEGORIES = [
@@ -53,8 +53,6 @@ export default function StudentExplorePage() {
   const [selected, setSelected] = useState<Opportunity | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const detailAbortRef = useRef<AbortController | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [favoritesFirst, setFavoritesFirst] = useState(false);
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -72,7 +70,7 @@ export default function StudentExplorePage() {
     return parts.map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(" ");
   };
 
-  const toBool = (v: any): boolean | null => {
+  const toBool = (v: unknown): boolean | null => {
     if (v === null || v === undefined) return null;
     if (typeof v === "boolean") return v;
     if (typeof v === "number") return v !== 0;
@@ -103,8 +101,8 @@ export default function StudentExplorePage() {
       setItems(json.data ?? []);
       setPage(json.page ?? p);
       setHasMore((json.data?.length ?? 0) >= pageSize);
-    } catch (err: any) {
-      setError(err.message || "Failed to load opportunities");
+    } catch (err) {
+      setError((err as Error).message || "Failed to load opportunities");
     } finally {
       setLoading(false);
     }
@@ -112,6 +110,7 @@ export default function StudentExplorePage() {
 
   useEffect(() => {
     load(1);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -122,6 +121,7 @@ export default function StudentExplorePage() {
     return () => {
       if (searchTimeout.current) window.clearTimeout(searchTimeout.current);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, selectedCategory]);
 
   const goto = (p: number) => {
@@ -151,7 +151,7 @@ export default function StudentExplorePage() {
       const details = json.data ?? null;
       if (details) {
         setSelected((prev) => {
-          const stipend = toBool(details.has_stipend ?? (prev as any)?.has_stipend ?? o.has_stipend);
+          const stipend = toBool(details.has_stipend ?? prev?.has_stipend ?? o.has_stipend);
           return {
             ...(prev ?? o),
             ...details,
@@ -159,7 +159,8 @@ export default function StudentExplorePage() {
           };
         });
       }
-    } catch (e) {
+    } catch {
+      // Silently catch errors
     } finally {
       detailAbortRef.current = null;
       setDetailLoading(false);

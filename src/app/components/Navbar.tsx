@@ -5,7 +5,6 @@ import { supabase } from "@/app/lib/supabaseClient"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
-import Image from "next/image"
 
 export default function Navbar() {
   const { user, loading } = useAuth()

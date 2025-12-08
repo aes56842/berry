@@ -92,12 +92,13 @@ export default function AuthPage() {
 
       setEmailSent(true)
 
-    } catch (err: any) {
+    } catch (err) {
       console.error("Sign in error:", err)
-      if (err.message.includes('not found') || err.message.includes('User not found') || err.message.includes('Signups not allowed')) {
+      const error = err as Error
+      if (error.message.includes('not found') || error.message.includes('User not found') || error.message.includes('Signups not allowed')) {
         setError("No account found with this email. Please sign up first.")
       } else {
-        setError(err.message || "Failed to send sign in link")
+        setError(error.message || "Failed to send sign in link")
       }
     } finally {
       setIsLoading(false)
@@ -137,7 +138,7 @@ export default function AuthPage() {
 
     try {
       // Build user metadata
-      const userMetadata: Record<string, any> = {
+      const userMetadata: Record<string, unknown> = {
         role: role,
         created_at: new Date().toISOString()
       }
@@ -162,9 +163,9 @@ export default function AuthPage() {
       if (signUpError) throw signUpError
       setEmailSent(true)
 
-    } catch (err: any) {
+    } catch (err) {
       console.error("Sign up error:", err)
-      setError(err.message || "Failed to send verification email")
+      setError((err as Error).message || "Failed to send verification email")
     } finally {
       setIsLoading(false)
     }
@@ -196,9 +197,9 @@ export default function AuthPage() {
       
       if (error) throw error
       setEmailSent(true)
-      
-    } catch (err: any) {
-      setError(err.message || "Failed to resend verification email")
+
+    } catch (err) {
+      setError((err as Error).message || "Failed to resend verification email")
     } finally {
       setIsLoading(false)
     }
@@ -457,7 +458,7 @@ export default function AuthPage() {
                   </h3>
                   <div className="mt-2 text-sm text-blue-700">
                     <p>
-                      We'll email you a magic link that will sign you in instantly.
+                      We&apos;ll email you a magic link that will sign you in instantly.
                       No password needed!
                     </p>
                     

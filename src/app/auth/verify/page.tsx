@@ -82,7 +82,7 @@ export default function VerifyPage() {
   }
 
   // New function to ensure session is properly established and persisted
-  const ensureSessionEstablished = async (session: any) => {
+  const ensureSessionEstablished = async (session: Record<string, unknown>) => {
     console.log('Ensuring session is properly established...')
 
     try {
@@ -305,7 +305,7 @@ export default function VerifyPage() {
           }
         }, 1500)
         
-      } catch (err: any) {
+      } catch (err: Record<string, unknown>) {
         console.error('Auth verification error:', err)
         setError(`Authentication error: ${err.message}`)
         

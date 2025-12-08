@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { createClient as createServerSupabase } from "@/app/utils/supabase/server";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
-export async function GET(req: Request) {
+export async function GET() {
   const serverSupabase = await createServerSupabase();
 
   // require authenticated user (reuse same auth pattern)
@@ -25,7 +25,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ message: "Failed to load categories" }, { status: 500 });
     }
     const categories = Array.isArray(data)
-      ? Array.from(new Set(data.map((r: any) => (r.category ?? "").trim()).filter(Boolean)))
+      ? Array.from(new Set(data.map((r: { category?: string }) => (r.category ?? "").trim()).filter(Boolean)))
       : [];
 
     return NextResponse.json({ categories });

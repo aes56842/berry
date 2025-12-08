@@ -102,7 +102,7 @@ export default function StudentProfilePage() {
 
     setSaving(true);
     try {
-      const body: any = {
+      const body: Record<string, unknown> = {
         userId,
         firstName: firstName.trim(),
         lastName: lastName.trim(),

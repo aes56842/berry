@@ -97,7 +97,7 @@ export default function Dashboard() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Account Setup Incomplete</h2>
           <p className="text-gray-600 mb-6">
-            Your account role hasn't been set up properly. Please contact support or sign up again.
+            Your account role hasn&apos;t been set up properly. Please contact support or sign up again.
           </p>
           <div className="space-y-3">
             <button

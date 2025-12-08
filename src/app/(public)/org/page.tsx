@@ -185,7 +185,7 @@ export default function OrganizationRegistration() {
       } else {
         setError(data.message || "Failed to submit registration")
       }
-    } catch (error) {
+    } catch {
       setError("An error occurred while submitting the form. Please try again.")
     } finally {
       setIsSubmitting(false)

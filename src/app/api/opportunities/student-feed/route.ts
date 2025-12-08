@@ -42,8 +42,8 @@ export async function GET(req: Request) {
       return NextResponse.json({ message: "Failed to load preferences" }, { status: 500 });
     }
 
-    const prefTypes = Array.isArray(prefRows) ? prefRows.map((r: any) => r.preference_type).filter(Boolean) : [];
-    const categories = Array.isArray(interestRows) ? interestRows.map((r: any) => r.category).filter(Boolean) : [];
+    const prefTypes = Array.isArray(prefRows) ? prefRows.map((r: Record<string, unknown>) => r.preference_type).filter(Boolean) : [];
+    const categories = Array.isArray(interestRows) ? interestRows.map((r: Record<string, unknown>) => r.category).filter(Boolean) : [];
 
     // Pagination params
     const url = new URL(req.url);
@@ -73,7 +73,7 @@ export async function GET(req: Request) {
 
     // exclude opportunities whose application_deadline is in the past
     const now = new Date();
-    const opportunitiesListFiltered = opportunitiesList.filter((o: any) => {
+    const opportunitiesListFiltered = opportunitiesList.filter((o: Record<string, unknown>) => {
       if (!o?.application_deadline) return true; // keep if no deadline
       const d = new Date(o.application_deadline);
       return d >= now;
@@ -82,10 +82,10 @@ export async function GET(req: Request) {
     const effectiveOpportunities = opportunitiesListFiltered;
 
     // Collect unique organization ids referenced by the opportunities
-    const orgIds = Array.from(new Set(effectiveOpportunities.map((o: any) => o.organization_id).filter(Boolean)));
+    const orgIds = Array.from(new Set(effectiveOpportunities.map((o: Record<string, unknown>) => o.organization_id).filter(Boolean)));
 
     // Fetch organization names in one query
-    let orgs: any[] = [];
+    let orgs: Record<string, unknown>[] = [];
     if (orgIds.length) {
       const { data: orgRows, error: orgErr } = await svc
         .from("organizations")
@@ -99,10 +99,10 @@ export async function GET(req: Request) {
       }
     }
 
-    const orgMap = new Map<string, string | null>(orgs.map((r: any) => [r.id, r.org_name ?? null]));
+    const orgMap = new Map<string, string | null>(orgs.map((r: Record<string, unknown>) => [r.id, r.org_name ?? null]));
 
     // Attach org_name to each opportunity
-    const opportunities = effectiveOpportunities.map((o: any) => ({
+    const opportunities = effectiveOpportunities.map((o: Record<string, unknown>) => ({
       ...o,
       org_name: o.organization_id ? orgMap.get(o.organization_id) ?? null : null,
     }));

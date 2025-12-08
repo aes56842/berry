@@ -6,7 +6,7 @@ import { supabase } from "@/app/lib/supabaseClient"
 
 export default function StudentProfileOnboarding() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<{ id: string; email?: string; user_metadata?: Record<string, unknown> } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
@@ -23,6 +23,7 @@ export default function StudentProfileOnboarding() {
 
   useEffect(() => {
     checkAuth()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkAuth = async () => {
@@ -200,7 +201,7 @@ export default function StudentProfileOnboarding() {
               Complete Your Profile
             </h1>
             <p className="text-gray-600 text-center">
-              Let's get to know you better! This information helps us match you with the best opportunities.
+              Let&apos;s get to know you better! This information helps us match you with the best opportunities.
             </p>
           </div>
 

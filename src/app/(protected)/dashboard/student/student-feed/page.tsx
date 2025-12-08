@@ -5,8 +5,6 @@ import { FaStar, FaBookmark, FaBars, FaFilter } from "react-icons/fa"
 import useFavorites from "../../../../../lib/useFavorites"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { supabase } from "@/app/lib/supabaseClient"
 
 type Opportunity = {
   id: string
@@ -29,12 +27,10 @@ type Opportunity = {
   location_type?: string | null
   application_url?: string | null
   has_stipend?: boolean | null
-  contact_info?: any | null
+  contact_info?: Record<string, unknown> | null
 }
 
 export default function StudentFeedPage() {
-  const router = useRouter()
-  const [user, setUser] = useState<any>(null)
   const [items, setItems] = useState<Opportunity[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -58,21 +54,6 @@ export default function StudentFeedPage() {
     year: "2-digit",
   })
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (session) {
-        setUser(session.user)
-      }
-    }
-    checkUser()
-  }, [])
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push("/auth?mode=signin")
-  }
-
   // small helper to call load with correct page
   const load = async (p = 1) => {
     setLoading(true)
@@ -89,9 +70,9 @@ export default function StudentFeedPage() {
       setItems(json.data ?? [])
       setPage(json.page ?? p)
       setHasMore((json.data?.length ?? 0) >= pageSize)
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error loading feed:", err)
-      setError(err.message || "Failed to load feed")
+      setError((err as Error).message || "Failed to load feed")
     } finally {
       setLoading(false)
     }
@@ -105,18 +86,6 @@ export default function StudentFeedPage() {
   const goto = (p: number) => {
     if (p < 1) return
     load(p)
-  }
-
-  // Format raw category keys into user-friendly labels:
-  // - Replace underscores/hyphens with spaces
-  // - Title-case each word
-  const formatCategory = (raw: string | null | undefined) => {
-    if (!raw) return ""
-    const parts = String(raw)
-      .replace(/[_-]+/g, " ")
-      .trim()
-      .split(/\s+/)
-    return parts.map(p => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(" ")
   }
 
   // open modal immediately with existing data, then fetch details and merge
@@ -150,12 +119,12 @@ export default function StudentFeedPage() {
           return {
             ...(prev ?? o),
             ...details,
-            has_stipend: details.has_stipend ?? (prev as any)?.has_stipend ?? o.has_stipend,
+            has_stipend: details.has_stipend ?? prev?.has_stipend ?? o.has_stipend,
           } as Opportunity
         })
       }
     } catch (e) {
-      if ((e as any)?.name !== "AbortError") console.error("Failed to load opportunity details", e)
+      if ((e as Error & { name?: string })?.name !== "AbortError") console.error("Failed to load opportunity details", e)
     } finally {
       detailAbortRef.current = null
       setDetailLoading(false)
@@ -340,7 +309,7 @@ export default function StudentFeedPage() {
           <div className="py-12 text-center text-white/70 text-lg">Loading feed…</div>
         ) : onlyFavorites && displayedItems.length === 0 ? (
           <div className="py-12 text-center text-white bg-white/10 p-8 rounded-2xl border-2 border-white/40 shadow-[0_20px_60px_rgba(82,178,191,0.3)] backdrop-blur">
-            You haven't favorited anything yet — star an opportunity to save it.
+            You haven&apos;t favorited anything yet — star an opportunity to save it.
           </div>
         ) : items.length === 0 ? (
           <div className="py-12 text-center text-white bg-white/10 p-8 rounded-2xl border-2 border-white/40 shadow-[0_20px_60px_rgba(82,178,191,0.3)] backdrop-blur">

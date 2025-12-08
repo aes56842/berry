@@ -25,7 +25,7 @@ const OPPORTUNITY_TYPES = [
 
 export default function StudentInterestsOnboarding() {
   const router = useRouter()
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<{ id: string; email?: string } | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState("")
@@ -37,6 +37,7 @@ export default function StudentInterestsOnboarding() {
 
   useEffect(() => {
     checkAuth()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const checkAuth = async () => {
@@ -270,7 +271,7 @@ export default function StudentInterestsOnboarding() {
               {selectedOpportunities.has('other') && (
                 <div className="mt-4">
                   <label htmlFor="otherDescription" className="block text-sm font-medium text-gray-700 mb-2">
-                    Please describe what you're looking for:
+                    Please describe what you&apos;re looking for:
                   </label>
                   <input
                     type="text"
