@@ -108,37 +108,40 @@ export async function PATCH(request: NextRequest) {
       }
     }
 
-    // Update organization approval status and verification_status
-    const updateData: Record<string, unknown> = { approved }
-    if (approved) {
-      updateData.verification_status = 'approved'
-    } else {
-      updateData.verification_status = 'rejected'
-    }
+    // Update organization approval status and verification_status explicitly
+    const newStatus = approved ? 'approved' : 'rejected'
 
-    const { data, error } = await supabase
+    const { data: updatedData, error: updateError } = await supabase
       .from('organizations')
-      .update(updateData)
+      .update({ approved, verification_status: newStatus })
       .eq('id', organizationId)
       .select()
       .single()
 
-    if (error) {
-      console.error('Error updating organization:', error)
+    if (updateError) {
+      console.error('Error updating organization:', updateError)
       return NextResponse.json(
-        { 
+        {
           message: "Failed to update organization",
-          error: error.message
+          error: updateError.message
         },
         { status: 500 }
       )
     }
 
-    console.log(`Organization ${organizationId} ${approved ? 'approved' : 'unapproved'} by admin`)
+    if (!updatedData) {
+      console.error('No organization was updated (no data returned)')
+      return NextResponse.json(
+        { message: 'No organization updated' },
+        { status: 500 }
+      )
+    }
+
+    console.log(`Organization ${organizationId} ${approved ? 'approved' : 'rejected'} by admin; verification_status set to '${updatedData.verification_status}'`)
 
     return NextResponse.json({
-      message: `Organization ${approved ? 'approved' : 'unapproved'} successfully`,
-      organization: data
+      message: `Organization ${approved ? 'approved' : 'rejected'} successfully`,
+      organization: updatedData
     })
 
   } catch (error) {
