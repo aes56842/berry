@@ -1,0 +1,107 @@
+/* Page container */
+.min-h-screen {
+  background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+}
+
+/* Profile card container */
+.bg-white.shadow-sm {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border: 1px solid #e5e7eb;
+}
+
+/* Avatar/Initials circle */
+.bg-indigo-100 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* Section headers */
+h3.text-sm.font-medium.text-gray-700 {
+  color: #4c1d95;
+  font-weight: 600;
+}
+
+/* Input fields */
+input.border.border-gray-200 {
+  background-color: #f3f4f6;
+  border: 2px solid #d1d5db;
+  transition: all 0.2s ease;
+}
+
+input.border.border-gray-200:focus {
+  background-color: #ffffff;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Primary buttons (Dashboard, Save) */
+.bg-indigo-600 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: all 0.2s ease;
+}
+
+.bg-indigo-600:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Disabled state */
+.bg-indigo-400 {
+  background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+  cursor: not-allowed;
+}
+
+/* Secondary buttons (Back, Cancel) */
+.bg-white.border {
+  background-color: #ffffff;
+  border: 2px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.bg-white.border:hover {
+  background-color: #f9fafb;
+  border-color: #667eea;
+}
+
+/* Error messages */
+.bg-red-50 {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-left: 4px solid #dc2626;
+}
+
+/* Success messages */
+.bg-green-50 {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-left: 4px solid #059669;
+}
+
+/* Loading spinner */
+.animate-spin {
+  border-color: #667eea;
+  border-top-color: transparent;
+}
+
+/* Page title */
+h1.text-2xl {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+/* Profile name display */
+.text-lg.font-medium.text-gray-900 {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* Grid sections */
+.grid.grid-cols-1.sm\:grid-cols-2 {
+  gap: 1.5rem;
+}
+
+/* Form labels */
+label.block.text-xs {
+  color: #4b5563;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
