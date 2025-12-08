@@ -17,14 +17,15 @@ export default function Navbar() {
     router.push("/")
   }
 
-  // Don't show navbar on auth pages, org registration, or org dashboard (has its own bar) #now student
+  // Don't show navbar on auth pages, org registration, org dashboard, student dashboard, or admin dashboard (they have their own bars)
   if (
     pathname === "/auth" ||
     pathname === "/org" ||
     pathname === "/org/login" ||
     pathname.startsWith("/auth/") ||
     pathname.startsWith("/dashboard/org") ||
-    pathname.startsWith("/dashboard/student")
+    pathname.startsWith("/dashboard/student") ||
+    pathname.startsWith("/dashboard/admin")
   ) {
     return null
   }

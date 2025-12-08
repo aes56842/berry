@@ -149,3 +149,49 @@ export async function PATCH(request: NextRequest) {
     )
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
+
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json(
+        { message: "Server configuration error: Missing Supabase environment variables" },
+        { status: 500 }
+      )
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+    const { organizationId } = await request.json()
+
+    if (!organizationId) {
+      return NextResponse.json(
+        { message: "Organization ID is required" },
+        { status: 400 }
+      )
+    }
+
+    // Delete the organization (cascade will handle related records)
+    const { error } = await supabase
+      .from('organizations')
+      .delete()
+      .eq('id', organizationId)
+
+    if (error) {
+      console.error('Error deleting organization:', error)
+      return NextResponse.json(
+        { message: "Failed to delete organization", error: error.message },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error('Error in DELETE organizations:', error)
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    )
+  }
+}
