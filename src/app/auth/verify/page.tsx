@@ -28,7 +28,9 @@ function VerifyPageContent() {
   //   '/dashboard/student'    – onboarding fully complete
   const checkStudentOnboarding = async (userId: string): Promise<string> => {
     try {
-      const response = await fetch(`/api/student-profile?userId=${userId}`)
+      const response = await fetch(`/api/student-profile?userId=${userId}`, {
+        cache: 'no-store'
+      })
       const data = await response.json()
 
       if (!response.ok || !data.exists) {
@@ -171,6 +173,10 @@ function VerifyPageContent() {
           return
         }
 
+        // Small delay to allow Supabase session persistence to complete
+        // This ensures the session is fully written before we query the API
+        await new Promise(resolve => setTimeout(resolve, 150))
+
         // ALWAYS check onboarding state — do NOT assume session means onboarding is complete
         // getRedirectPath will return:
         //   '/onboarding/profile'   – if no student profile row exists
@@ -178,7 +184,14 @@ function VerifyPageContent() {
         //   '/dashboard/student'    – only if onboarding is fully complete
         const redirectPath = await getRedirectPath(userId, role)
         console.log('Existing session — redirecting based on onboarding state to:', redirectPath)
-        router.replace(redirectPath)
+        
+        // Ensure we have the resolved path before navigating
+        if (redirectPath) {
+          router.replace(redirectPath)
+        } else {
+          console.error('getRedirectPath returned empty — defaulting to onboarding')
+          router.replace('/onboarding/profile')
+        }
         return
       }
       
