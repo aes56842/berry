@@ -130,11 +130,14 @@ export default function AdminDashboard() {
 
       if (response.ok) {
         await Promise.all([fetchOrganizations(), fetchStats()])
+        alert(`Organization ${approved ? 'approved' : 'rejected'} successfully!`)
       } else {
-        console.error('Failed to update organization')
+        const errorData = await response.json()
+        alert(errorData.message || 'Failed to update organization')
       }
     } catch (error) {
       console.error('Error updating organization:', error)
+      alert('An error occurred while updating the organization. Please try again.')
     } finally {
       setActionLoading(null)
     }

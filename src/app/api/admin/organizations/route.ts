@@ -77,45 +77,6 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
-    // If approving, first check that email is verified
-    if (approved) {
-      const { data: org, error: fetchError } = await supabase
-        .from('organizations')
-        .select('verification_status')
-        .eq('id', organizationId)
-        .single()
-
-      if (fetchError) {
-        console.error('Error fetching organization:', fetchError)
-        return NextResponse.json(
-          {
-            message: "Failed to fetch organization details",
-            error: fetchError.message
-          },
-          { status: 500 }
-        )
-      }
-
-      // Normalize verification status to be resilient to casing/format differences
-      const rawStatus = org?.verification_status
-      const normalized = rawStatus ? String(rawStatus).trim().toLowerCase() : ''
-
-      const allowed = ['email_verified', 'email-verified', 'email verified', 'approved']
-
-      // Validate that email is verified before allowing approval
-      if (!allowed.includes(normalized)) {
-        console.warn(`Attempted approve but org has verification_status='${rawStatus}' (normalized='${normalized}')`)
-        return NextResponse.json(
-          {
-            message: "Cannot approve organization: Email not yet verified. Please ensure the organization has verified their email before approving.",
-            currentStatus: rawStatus,
-            normalizedStatus: normalized
-          },
-          { status: 400 }
-        )
-      }
-    }
-
     // Update organization approval status and verification_status explicitly
     const newStatus = approved ? 'approved' : 'rejected'
 
