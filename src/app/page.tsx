@@ -48,82 +48,63 @@ export default function Home() {
 
       <div className="relative z-10 flex flex-1 items-center justify-center px-4 py-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10">
-          {/* LEFT: Logo block */}
+          {/* LEFT: 3D collage logo only */}
           <div className="w-full md:w-1/2 flex justify-center md:justify-start">
-            <div className="flex items-center gap-10">
-              {/* Animated B logo */}
-              <div className="relative shrink-0">
-                <div className="absolute -inset-6 rounded-full bg-pink-300/60 blur-3xl opacity-80 animate-pulse" />
-                <Image
-                  src="/logos/berry-letter.png"
-                  alt="Berry logo"
-                  width={130}
-                  height={90}
-                  className="
-                    relative z-10 berry-float
-                    drop-shadow-[0_14px_35px_rgba(0,0,0,0.35)]
-                    transition-transform duration-300
-                    hover:scale-110 hover:-rotate-3
-                  "
-                />
-              </div>
+            {/* Bigger, more spread-out collage – hidden on very small screens */}
+            <div className="relative hidden sm:block w-[740px] h-[520px]">
+              {/* Base blocks */}
+              <Image
+                src="/logos/clearbuilding.png"
+                alt="Blocks"
+                width={400}
+                height={290}
+                className="absolute bottom-0 left-10 drop-shadow-[0_14px_35px_rgba(0,0,0,0.35)]"
+              />
 
-              {/* 3D collage logo – hidden on very small screens */}
-              <div className="relative hidden sm:block w-[360px] h-[260px]">
-                {/* Base blocks */}
-                <Image
-                  src="/logos/clearbuilding.png"
-                  alt="Blocks"
-                  width={260}
-                  height={160}
-                  className="absolute bottom-0 left-6 drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                />
+              {/* iPad + easel */}
+              <Image
+                src="/logos/3D Ipad and Easel.png"
+                alt="Creative tools"
+                width={400}
+                height={310}
+                className="absolute left-[-20px] top-40 drop-shadow-[0_14px_35px_rgba(0,0,0,0.35)]"
+              />
 
-                {/* iPad + easel */}
-                <Image
-                  src="/logos/3D Ipad and Easel.png"
-                  alt="Creative tools"
-                  width={260}
-                  height={180}
-                  className="absolute left-[-10px] top-32 drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                />
+              {/* Globe + briefcase */}
+              <Image
+                src="/logos/BusinessGlobe_clear.png"
+                alt="Global opportunities"
+                width={310}
+                height={310}
+                className="absolute left-32 top-[-10px] drop-shadow-[0_14px_35px_rgba(0,0,0,0.3)]"
+              />
 
-                {/* Globe + briefcase */}
-                <Image
-                  src="/logos/BusinessGlobe_clear.png"
-                  alt="Global opportunities"
-                  width={180}
-                  height={180}
-                  className="absolute left-24 top-[-10px]"
-                />
+              {/* Microscope */}
+              <Image
+                src="/logos/Microscope_clearbackground.png"
+                alt="Microscope"
+                width={290}
+                height={310}
+                className="absolute right-[-20px] top-32 drop-shadow-[0_14px_35px_rgba(0,0,0,0.35)]"
+              />
 
-                {/* Microscope */}
-                <Image
-                  src="/logos/Microscope_clearbackground.png"
-                  alt="Microscope"
-                  width={160}
-                  height={180}
-                  className="absolute right-[-10px] top-24 drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]"
-                />
+              {/* Rulers */}
+              <Image
+                src="/logos/rulers_3D.png"
+                alt="Rulers"
+                width={250}
+                height={250}
+                className="absolute left-[-10px] bottom-0 drop-shadow-[0_10px_25px_rgba(0,0,0,0.3)]"
+              />
 
-                {/* Rulers */}
-                <Image
-                  src="/logos/rulers_3D.png"
-                  alt="Rulers"
-                  width={120}
-                  height={120}
-                  className="absolute left-[-20px] bottom-2"
-                />
-
-                {/* Typewriter */}
-                <Image
-                  src="/logos/typewriter.png"
-                  alt="Typewriter"
-                  width={150}
-                  height={140}
-                  className="absolute left-6 top-20"
-                />
-              </div>
+              {/* Typewriter */}
+              <Image
+                src="/logos/typewriter.png"
+                alt="Typewriter"
+                width={290}
+                height={270}
+                className="absolute left-16 top-24 drop-shadow-[0_12px_30px_rgba(0,0,0,0.32)]"
+              />
             </div>
           </div>
 
