@@ -133,6 +133,26 @@ function VerifyPageContent() {
     
   useEffect(() => {
     const handleAuth = async () => {
+      // If a session already exists, skip the full auth exchange to avoid duplicate PKCE/code exchanges
+      // This prevents "both auth code and code verifier should be non-empty" errors on reload/rehydration.
+      const { data: existing } = await supabase.auth.getSession()
+      if (existing?.session) {
+        console.log('Skipping auth — session already exists')
+        try {
+          const role = existing.session.user.user_metadata?.role
+          const redirectPath = role === 'student'
+            ? '/dashboard/student'
+            : role === 'org'
+              ? '/dashboard/org'
+              : '/dashboard'
+          // Use replace to avoid polluting history
+          router.replace(redirectPath)
+        } catch (e) {
+          console.warn('Skipping auth: redirect failed', e)
+        }
+        return
+      }
+      
       try {
         // Check for error parameters in URL
         const errorParam = searchParams.get('error')
