@@ -22,6 +22,10 @@ function VerifyPageContent() {
   }
   
   // Check if student needs onboarding
+  // Returns:
+  //   '/onboarding/profile'   – no student row exists yet
+  //   '/onboarding/interests' – profile exists but onboarding not complete
+  //   '/dashboard/student'    – onboarding fully complete
   const checkStudentOnboarding = async (userId: string): Promise<string> => {
     try {
       const response = await fetch(`/api/student-profile?userId=${userId}`)
@@ -130,25 +134,51 @@ function VerifyPageContent() {
       return false
     }
   }
+
+  // Helper to determine the correct redirect path based on role and onboarding state
+  // IMPORTANT: Supabase automatically creates a session after verifyOtp() or exchangeCodeForSession(),
+  // so a valid session does NOT mean onboarding is complete. We must always check onboarding state
+  // before redirecting to the dashboard.
+  const getRedirectPath = async (userId: string, role: string | undefined): Promise<string> => {
+    if (role === 'student') {
+      return await checkStudentOnboarding(userId)
+    } else if (role === 'org') {
+      return await handleOrgVerification(userId)
+    }
+    return '/dashboard'
+  }
     
   useEffect(() => {
     const handleAuth = async () => {
-      // If a session already exists, skip the full auth exchange to avoid duplicate PKCE/code exchanges
-      // This prevents "both auth code and code verifier should be non-empty" errors on reload/rehydration.
+      // Check if a session already exists.
+      // IMPORTANT: Even if a session exists, we must still check onboarding state.
+      // Supabase creates a session immediately after email verification (verifyOtp),
+      // but that does NOT mean the user has completed onboarding.
+      // We cannot skip to dashboard just because a session exists.
       const { data: existing } = await supabase.auth.getSession()
       if (existing?.session) {
-        console.log('Skipping auth — session already exists')
+        console.log('Session already exists — checking onboarding state before redirect')
         try {
+          const userId = existing.session.user.id
           const role = existing.session.user.user_metadata?.role
-          const redirectPath = role === 'student'
-            ? '/dashboard/student'
-            : role === 'org'
-              ? '/dashboard/org'
-              : '/dashboard'
-          // Use replace to avoid polluting history
+          const email = existing.session.user.email
+
+          // Validate student domain if applicable
+          if (role === 'student' && email && !isAllowedStudentDomain(email)) {
+            console.error('Domain not allowed for student accounts:', email)
+            await supabase.auth.signOut()
+            const errorMessage = `Student accounts require an email address from ${ALLOWED_DOMAINS.join(" or ")}.`
+            router.push(`/auth?mode=signup&error=domain_not_allowed&message=${encodeURIComponent(errorMessage)}`)
+            return
+          }
+
+          // Determine redirect based on onboarding state (NOT just role)
+          const redirectPath = await getRedirectPath(userId, role)
+          console.log('Existing session — redirecting based on onboarding state to:', redirectPath)
           router.replace(redirectPath)
         } catch (e) {
-          console.warn('Skipping auth: redirect failed', e)
+          console.warn('Error resolving redirect for existing session:', e)
+          router.replace('/dashboard')
         }
         return
       }
@@ -230,19 +260,9 @@ function VerifyPageContent() {
             console.error('No session data returned from verifyOtp')
           }
 
-          // Get user role and determine redirect path
-          const role = data.user?.user_metadata?.role
-          let redirectPath: string
-
-          if (role === 'student') {
-            // Check if student needs onboarding
-            redirectPath = await checkStudentOnboarding(data.user.id)
-          } else if (role === 'org') {
-            // Handle organization email verification and approval check
-            redirectPath = await handleOrgVerification(data.user.id)
-          } else {
-            redirectPath = '/dashboard'
-          }
+          // Determine redirect path based on onboarding state (NOT just role)
+          // IMPORTANT: A new session exists now, but user may not have completed onboarding
+          const redirectPath = await getRedirectPath(data.user.id, userRole)
 
           console.log('Redirecting to:', redirectPath)
           setStatus(`Authentication successful! Redirecting...`)
@@ -299,19 +319,9 @@ function VerifyPageContent() {
         // Authentication successful
         console.log('Authentication successful with code exchange!', data.user)
 
-        // Get user role and determine redirect path
-        const role = data.user?.user_metadata?.role
-        let redirectPath: string
-
-        if (role === 'student') {
-          // Check if student needs onboarding
-          redirectPath = await checkStudentOnboarding(data.user.id)
-        } else if (role === 'org') {
-          // Handle organization email verification and approval check
-          redirectPath = await handleOrgVerification(data.user.id)
-        } else {
-          redirectPath = '/dashboard'
-        }
+        // Determine redirect path based on onboarding state (NOT just role)
+        // IMPORTANT: A new session exists now, but user may not have completed onboarding
+        const redirectPath = await getRedirectPath(data.user.id, userRole)
 
         setStatus(`Authentication successful! Redirecting...`)
 
@@ -354,18 +364,15 @@ function VerifyPageContent() {
               return
             }
             
-            // Domain is valid, redirect to dashboard
-            const role = data.session.user.user_metadata?.role
-            const redirectPath = role === 'student' ? '/dashboard/student' : 
-                               role === 'org' ? '/dashboard/org' : 
-                               '/dashboard'
+            // Domain is valid — check onboarding state before redirecting
+            const redirectPath = await getRedirectPath(data.session.user.id, userRole)
             
             setStatus(`Already authenticated! Redirecting...`)
             router.replace(redirectPath)
             
             // Fallback navigation with improved reliability
             setTimeout(() => {
-              if (!window.location.pathname.startsWith('/dashboard')) {
+              if (!window.location.pathname.startsWith('/dashboard') && !window.location.pathname.startsWith('/onboarding')) {
                 console.log('Using fallback navigation')
                 window.location.href = redirectPath
               }
