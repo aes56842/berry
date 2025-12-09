@@ -176,10 +176,7 @@ function VerifyPageContent() {
           const redirectPath = await getRedirectPath(userId, role)
           console.log('Existing session — redirecting based on onboarding state to:', redirectPath)
           router.replace(redirectPath)
-        } catch (e) {
-          console.warn('Error resolving redirect for existing session:', e)
-          router.replace('/dashboard')
-        }
+        } 
         return
       }
       
