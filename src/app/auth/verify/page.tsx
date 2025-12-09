@@ -158,27 +158,27 @@ function VerifyPageContent() {
       const { data: existing } = await supabase.auth.getSession()
       if (existing?.session) {
         console.log('Session already exists — checking onboarding state before redirect')
-        try {
-          const userId = existing.session.user.id
-          const role = existing.session.user.user_metadata?.role
-          const email = existing.session.user.email
+        const userId = existing.session.user.id
+        const role = existing.session.user.user_metadata?.role
+        const email = existing.session.user.email
 
-          // Validate student domain if applicable
-          if (role === 'student' && email && !isAllowedStudentDomain(email)) {
-            console.error('Domain not allowed for student accounts:', email)
-            await supabase.auth.signOut()
-            const errorMessage = `Student accounts require an email address from ${ALLOWED_DOMAINS.join(" or ")}.`
-            router.push(`/auth?mode=signup&error=domain_not_allowed&message=${encodeURIComponent(errorMessage)}`)
-            return
-          }
-
-          // Determine redirect based on onboarding state (NOT just role)
-          const redirectPath = await getRedirectPath(userId, role)
-          console.log('Existing session — redirecting based on onboarding state to:', redirectPath)
-          router.replace(redirectPath)
-        } catch (e) {
-          console.warn('Error resolving redirect for existing session:', e)
+        // Validate student domain if applicable
+        if (role === 'student' && email && !isAllowedStudentDomain(email)) {
+          console.error('Domain not allowed for student accounts:', email)
+          await supabase.auth.signOut()
+          const errorMessage = `Student accounts require an email address from ${ALLOWED_DOMAINS.join(" or ")}.`
+          router.push(`/auth?mode=signup&error=domain_not_allowed&message=${encodeURIComponent(errorMessage)}`)
+          return
         }
+
+        // ALWAYS check onboarding state — do NOT assume session means onboarding is complete
+        // getRedirectPath will return:
+        //   '/onboarding/profile'   – if no student profile row exists
+        //   '/onboarding/interests' – if profile exists but onboarding_completed is false
+        //   '/dashboard/student'    – only if onboarding is fully complete
+        const redirectPath = await getRedirectPath(userId, role)
+        console.log('Existing session — redirecting based on onboarding state to:', redirectPath)
+        router.replace(redirectPath)
         return
       }
       
