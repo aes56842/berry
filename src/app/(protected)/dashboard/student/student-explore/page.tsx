@@ -45,7 +45,7 @@ export default function StudentExplorePage() {
   const [page, setPage] = useState(1);
   const [pageSize] = useState(12);
   const [hasMore, setHasMore] = useState(true);
-  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const { favorites, toggleFavorite, isFavorite, loading: favLoading } = useFavorites();
 
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
