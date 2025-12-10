@@ -284,8 +284,10 @@ function VerifyPageContent() {
 
           // Fallback navigation with improved reliability
           setTimeout(() => {
-            if (!window.location.pathname.startsWith('/dashboard') && !window.location.pathname.startsWith('/onboarding')) {
-              console.log('Using fallback navigation')
+            if (!window.location.pathname.startsWith('/dashboard') &&
+                !window.location.pathname.startsWith('/onboarding') &&
+                !window.location.pathname.startsWith('/org/')) {
+              console.log('Using fallback navigation to:', redirectPath)
               window.location.href = redirectPath
             }
           }, 1500)
@@ -342,8 +344,10 @@ function VerifyPageContent() {
 
         // Fallback navigation with improved reliability
         setTimeout(() => {
-          if (!window.location.pathname.startsWith('/dashboard') && !window.location.pathname.startsWith('/onboarding')) {
-            console.log('Using fallback navigation')
+          if (!window.location.pathname.startsWith('/dashboard') &&
+              !window.location.pathname.startsWith('/onboarding') &&
+              !window.location.pathname.startsWith('/org/')) {
+            console.log('Using fallback navigation to:', redirectPath)
             window.location.href = redirectPath
           }
         }, 1500)
