@@ -53,14 +53,14 @@ export async function GET(req: Request) {
     const to = page * pageSize - 1;
 
     // Query opportunities using service client (bypasses RLS)
-    // Show all opportunities regardless of preferences (students can filter in Explore page)
+    // Fetch opportunities and apply student filters (AND): category IN categories AND opportunity_type IN prefTypes
     let q = svc
       .from("opportunities")
       .select("id, opportunity_name, brief_description, category, opportunity_type, application_deadline, organization_id")
       .order("application_deadline", { ascending: true });
 
-    // Note: We no longer filter by categories and prefTypes to show all opportunities in the feed
-    // This gives students a personalized feed without hiding opportunities they might be interested in
+    if (categories.length) q = q.in("category", categories);
+    if (prefTypes.length) q = q.in("opportunity_type", prefTypes);
 
     const { data: opportunitiesRaw, error: oppError } = await q.range(from, to);
 
