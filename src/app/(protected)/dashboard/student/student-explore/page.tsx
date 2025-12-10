@@ -70,6 +70,16 @@ export default function StudentExplorePage() {
     return parts.map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(" ");
   };
 
+  // Convert display category name back to database format
+  const convertCategoryToDb = (displayName: string): string => {
+    if (!displayName) return "";
+    return displayName
+      .toLowerCase()
+      .replace(/\s+&\s+/g, "_") // "& " becomes "_"
+      .replace(/\s+/g, "_") // spaces become underscores
+      .trim();
+  };
+
   const toBool = (v: unknown): boolean | null => {
     if (v === null || v === undefined) return null;
     if (typeof v === "boolean") return v;
@@ -88,7 +98,8 @@ export default function StudentExplorePage() {
       params.set("page", String(p));
       params.set("pageSize", String(pageSize));
       if (currentSearch.trim()) params.set("search", currentSearch.trim());
-      if (currentCategory) params.set("category", currentCategory);
+      // Convert category display name to database format
+      if (currentCategory) params.set("category", convertCategoryToDb(currentCategory));
 
       const res = await fetch(`/api/opportunities/student-explore?${params.toString()}`, {
         cache: "no-store",
@@ -300,7 +311,7 @@ export default function StudentExplorePage() {
                     onClick={() => setSelectedCategory(selectedCategory === BERRY_CATEGORIES[0] ? "" : BERRY_CATEGORIES[0])}
                     className={`text-center px-8 py-6 rounded-2xl font-[Marble] font-bold text-base transition-all duration-200 text-xl ${
                       selectedCategory === BERRY_CATEGORIES[0]
-                        ? "bg-[#52b2bf] text-white shadow-[0_15px_40px_rgba(82,178,191,0.45)] scale-105"
+                        ? "bg-[#00327a] text-white shadow-[0_15px_40px_rgba(0,50,122,0.6)] scale-105"
                         : "bg-[#52b2bf] text-white hover:bg-[#00327a] hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] hover:-translate-y-1"
                     }`}
                   >
@@ -310,7 +321,7 @@ export default function StudentExplorePage() {
                     onClick={() => setSelectedCategory(selectedCategory === BERRY_CATEGORIES[1] ? "" : BERRY_CATEGORIES[1])}
                     className={`text-center px-8 py-6 rounded-2xl font-[Marble] font-bold text-base transition-all duration-200 text-xl ${
                       selectedCategory === BERRY_CATEGORIES[1]
-                        ? "bg-[#52b2bf] text-white shadow-[0_15px_40px_rgba(82,178,191,0.45)] scale-105"
+                        ? "bg-[#00327a] text-white shadow-[0_15px_40px_rgba(0,50,122,0.6)] scale-105"
                         : "bg-[#52b2bf] text-white hover:bg-[#00327a] hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] hover:-translate-y-1"
                     }`}
                   >
@@ -324,7 +335,7 @@ export default function StudentExplorePage() {
                     onClick={() => setSelectedCategory(selectedCategory === BERRY_CATEGORIES[2] ? "" : BERRY_CATEGORIES[2])}
                     className={`text-center px-8 py-6 rounded-2xl font-[Marble] font-bold text-base transition-all duration-200 text-xl ${
                       selectedCategory === BERRY_CATEGORIES[2]
-                        ? "bg-[#52b2bf] text-white shadow-[0_15px_40px_rgba(82,178,191,0.45)] scale-105"
+                        ? "bg-[#00327a] text-white shadow-[0_15px_40px_rgba(0,50,122,0.6)] scale-105"
                         : "bg-[#52b2bf] text-white hover:bg-[#00327a] hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] hover:-translate-y-1"
                     }`}
                   >
@@ -334,7 +345,7 @@ export default function StudentExplorePage() {
                     onClick={() => setSelectedCategory(selectedCategory === BERRY_CATEGORIES[3] ? "" : BERRY_CATEGORIES[3])}
                     className={`text-center px-8 py-6 rounded-2xl font-[Marble] font-bold text-base transition-all duration-200 text-xl ${
                       selectedCategory === BERRY_CATEGORIES[3]
-                        ? "bg-[#52b2bf] text-white shadow-[0_15px_40px_rgba(82,178,191,0.45)] scale-105"
+                        ? "bg-[#00327a] text-white shadow-[0_15px_40px_rgba(0,50,122,0.6)] scale-105"
                         : "bg-[#52b2bf] text-white hover:bg-[#00327a] hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] hover:-translate-y-1"
                     }`}
                   >
@@ -348,7 +359,7 @@ export default function StudentExplorePage() {
                     onClick={() => setSelectedCategory(selectedCategory === BERRY_CATEGORIES[4] ? "" : BERRY_CATEGORIES[4])}
                     className={`text-center px-8 py-6 rounded-2xl font-[Marble] font-bold text-base transition-all duration-200 text-xl ${
                       selectedCategory === BERRY_CATEGORIES[4]
-                        ? "bg-[#52b2bf] text-white shadow-[0_15px_40px_rgba(82,178,191,0.45)] scale-105"
+                        ? "bg-[#00327a] text-white shadow-[0_15px_40px_rgba(0,50,122,0.6)] scale-105"
                         : "bg-[#52b2bf] text-white hover:bg-[#00327a] hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] hover:-translate-y-1"
                     }`}
                   >
@@ -358,7 +369,7 @@ export default function StudentExplorePage() {
                     onClick={() => setSelectedCategory(selectedCategory === BERRY_CATEGORIES[5] ? "" : BERRY_CATEGORIES[5])}
                     className={`text-center px-8 py-6 rounded-2xl font-[Marble] font-bold text-base transition-all duration-200 text-xl ${
                       selectedCategory === BERRY_CATEGORIES[5]
-                        ? "bg-[#52b2bf] text-white shadow-[0_15px_40px_rgba(82,178,191,0.45)] scale-105"
+                        ? "bg-[#00327a] text-white shadow-[0_15px_40px_rgba(0,50,122,0.6)] scale-105"
                         : "bg-[#52b2bf] text-white hover:bg-[#00327a] hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] hover:-translate-y-1"
                     }`}
                   >
@@ -371,7 +382,7 @@ export default function StudentExplorePage() {
                   onClick={() => setSelectedCategory(selectedCategory === BERRY_CATEGORIES[6] ? "" : BERRY_CATEGORIES[6])}
                   className={`text-center px-8 py-6 rounded-2xl font-[Marble] font-bold text-base transition-all duration-200 text-xl ${
                     selectedCategory === BERRY_CATEGORIES[6]
-                      ? "bg-[#52b2bf] text-white shadow-[0_15px_40px_rgba(82,178,191,0.45)] scale-105"
+                      ? "bg-[#00327a] text-white shadow-[0_15px_40px_rgba(0,50,122,0.6)] scale-105"
                       : "bg-[#52b2bf] text-white hover:bg-[#00327a] hover:shadow-[0_15px_40px_rgba(82,178,191,0.45)] hover:-translate-y-1"
                   }`}
                 >

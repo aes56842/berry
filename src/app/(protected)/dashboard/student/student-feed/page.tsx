@@ -30,6 +30,23 @@ type Opportunity = {
   contact_info?: Record<string, unknown> | null
 }
 
+// Convert display category name back to database format
+const convertCategoryToDb = (displayName: string): string => {
+  if (!displayName) return "";
+  return displayName
+    .toLowerCase()
+    .replace(/\s+&\s+/g, "_") // "& " becomes "_"
+    .replace(/\s+/g, "_") // spaces become underscores
+    .trim();
+};
+
+// Convert database category format to display format
+const formatCategory = (raw: string | null | undefined) => {
+  if (!raw) return "";
+  const parts = String(raw).replace(/[_-]+/g, " ").trim().split(/\s+/);
+  return parts.map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join(" ");
+};
+
 export default function StudentFeedPage() {
   const [items, setItems] = useState<Opportunity[]>([])
   const [loading, setLoading] = useState(false)

@@ -3,6 +3,17 @@ import { NextResponse } from "next/server";
 import { createClient as createServerSupabase } from "@/app/utils/supabase/server";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
+// Valid category values in database
+const VALID_CATEGORIES = [
+  'stem_innovation',
+  'arts_design',
+  'humanities_social_sciences',
+  'civic_engagement_leadership',
+  'health_sports_sustainability',
+  'business_entrepreneurship',
+  'trades_technical'
+];
+
 export async function GET(req: Request) {
   // create server supabase client using your helper (it awaits cookies())
   const serverSupabase = await createServerSupabase();
@@ -33,7 +44,20 @@ export async function GET(req: Request) {
     // optional filters
     const searchRaw = url.searchParams.get("search") ?? "";
     const search = searchRaw.trim();
-    const category = url.searchParams.get("category") ?? "";
+    let category = url.searchParams.get("category") ?? "";
+    
+    // Normalize category - make sure it's a valid database value
+    if (category && !VALID_CATEGORIES.includes(category)) {
+      // Try to fix common formatting issues
+      category = category
+        .toLowerCase()
+        .replace(/\s+&\s+/g, "_")
+        .replace(/\s+/g, "_")
+        .trim();
+    }
+    
+    // Only filter by category if it's valid
+    const hasValidCategory = category && VALID_CATEGORIES.includes(category);
 
     // If searching, first find matching organization IDs
     let matchingOrgIds: string[] = [];
@@ -57,7 +81,7 @@ export async function GET(req: Request) {
       )
       .order("application_deadline", { ascending: true });
 
-    if (category) {
+    if (hasValidCategory) {
       q = q.eq("category", category);
     }
 
