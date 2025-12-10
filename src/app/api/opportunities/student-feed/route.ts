@@ -45,6 +45,9 @@ export async function GET(req: Request) {
     const prefTypes = Array.isArray(prefRows) ? prefRows.map((r: Record<string, unknown>) => r.preference_type).filter(Boolean) : [];
     const categories = Array.isArray(interestRows) ? interestRows.map((r: Record<string, unknown>) => r.category).filter(Boolean) : [];
 
+    console.log("[student-feed] User preferences:", { prefTypes, categories });
+    console.log("[student-feed] Has preferences?", { prefTypesLength: prefTypes.length, categoriesLength: categories.length });
+
     // Pagination params
     const url = new URL(req.url);
     const page = Math.max(1, Number(url.searchParams.get("page") || "1"));
@@ -53,16 +56,40 @@ export async function GET(req: Request) {
     const to = page * pageSize - 1;
 
     // Query opportunities using service client (bypasses RLS)
-    // Fetch opportunities and apply student filters (AND): category IN categories AND opportunity_type IN prefTypes
+    // First, fetch ALL opportunities to see what values exist
+    const { data: allOppsSample, error: sampleErr } = await svc
+      .from("opportunities")
+      .select("id, opportunity_name, category, opportunity_type, application_deadline")
+      .limit(5);
+    
+    console.log("[student-feed] Sample opportunities from DB:", allOppsSample?.map((o: Record<string, unknown>) => ({
+      name: o.opportunity_name,
+      category: o.category,
+      type: o.opportunity_type,
+    })));
+
     let q = svc
       .from("opportunities")
       .select("id, opportunity_name, brief_description, category, opportunity_type, application_deadline, organization_id")
       .order("application_deadline", { ascending: true });
 
-    if (categories.length) q = q.in("category", categories);
-    if (prefTypes.length) q = q.in("opportunity_type", prefTypes);
+    // Apply filters with OR logic instead: (category IN categories) OR (opportunity_type IN prefTypes)
+    // This way students see opportunities that match either their interests OR their preferred types
+    if (categories.length && prefTypes.length) {
+      console.log("[student-feed] Filtering by categories OR preference types");
+      q = q.or(`category.in.(${categories.map(c => `"${c}"`).join(",")}),opportunity_type.in.(${prefTypes.map(p => `"${p}"`).join(",")})`);
+    } else if (categories.length) {
+      console.log("[student-feed] Filtering by categories only:", categories);
+      q = q.in("category", categories);
+    } else if (prefTypes.length) {
+      console.log("[student-feed] Filtering by preference types only:", prefTypes);
+      q = q.in("opportunity_type", prefTypes);
+    } else {
+      console.log("[student-feed] No preferences to filter by");
+    }
 
     const { data: opportunitiesRaw, error: oppError } = await q.range(from, to);
+    console.log("[student-feed] Query returned:", { count: opportunitiesRaw?.length, hasError: !!oppError, error: oppError });
 
     if (oppError) {
       console.error("Error fetching opportunities:", oppError);
@@ -106,6 +133,12 @@ export async function GET(req: Request) {
       ...o,
       org_name: o.organization_id ? orgMap.get(o.organization_id as string) ?? null : null,
     }));
+
+    console.log("[student-feed] Final response:", {
+      opportunitiesReturned: opportunities.length,
+      studentPreferences: { categories, prefTypes },
+      hasPreferences: categories.length > 0 || prefTypes.length > 0,
+    });
 
     return NextResponse.json({
       data: opportunities,
